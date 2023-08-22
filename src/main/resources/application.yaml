@@ -1,3 +1,12 @@
 
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/test
+      database: test
+      auto-index-creation: true
+      authentication-database: admin
+      write-concern: majority
+
 server:
   port: 8444
