@@ -12,7 +12,8 @@ public class ResponseMapper {
                 response.getStatusCode(),
                 response.getHeaders(),
                 response.getBody(),
-                response.getError()
+                response.getError(),
+                response.getDate()
         );
     }
 

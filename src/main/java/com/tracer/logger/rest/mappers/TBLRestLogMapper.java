@@ -14,8 +14,10 @@ public class TBLRestLogMapper {
         Response response = ResponseMapper.convertToEntity(tblLogDTO.getResponse());
 
         return new TBLRestLog(
+                tblLogDTO.getId(),
                 request,
-                response
+                response,
+                tblLogDTO.getService()
         );
     }
 
@@ -27,8 +29,10 @@ public class TBLRestLogMapper {
         ResponseDTO responseDTO = ResponseMapper.convertToDTO(response);
 
         return new TBLRestLogDTO(
+                tblLog.getId(),
                 requestDTO,
-                responseDTO
+                responseDTO,
+                tblLog.getService()
         );
     }
 }

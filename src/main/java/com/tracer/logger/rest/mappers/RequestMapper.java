@@ -12,7 +12,8 @@ public class RequestMapper {
                     request.getMethod(),
                     request.getUrl(),
                     request.getBody(),
-                    request.getHeaders()
+                    request.getHeaders(),
+                    request.getDate()
             );
         }
 

@@ -26,21 +26,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TBLRestControllerTest {
+public class TBLRestMainControllerTest {
 
 
     private final MockMvc mockMvc;
     private static ObjectMapper objectMapper;
 
     @Autowired
-    public TBLRestControllerTest(MockMvc mockMvc) {
+    public TBLRestMainControllerTest(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
     }
 
@@ -68,6 +72,7 @@ public class TBLRestControllerTest {
     @Test
     public void logTest(){
 
+        UUID uuid = UUID.randomUUID();
         String header = "header";
         String body = "body";
         String url = "url";
@@ -75,10 +80,10 @@ public class TBLRestControllerTest {
         String errorMessage = "errorMessage";
         HttpMethod method = HttpMethod.GET;
 
-        RequestDTO requestDTO = new RequestDTO(method, url, header, body);
-        ResponseDTO responseDTO = new ResponseDTO(httpStatusCode, header, body, errorMessage);
+        RequestDTO requestDTO = new RequestDTO(method, url, header, body, new Date());
+        ResponseDTO responseDTO = new ResponseDTO(httpStatusCode, header, body, errorMessage, new Date());
 
-        TBLRestLogDTO tblRestLogDTO = new TBLRestLogDTO(requestDTO, responseDTO);
+        TBLRestLogDTO tblRestLogDTO = new TBLRestLogDTO(uuid.toString(), requestDTO, responseDTO, "BusinessService");
         this.objectMapper = new ObjectMapper();
         this.objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
@@ -95,7 +100,7 @@ public class TBLRestControllerTest {
             this.mockMvc.perform(post("/tbl/rest/log")
                     .content(json)
                     .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
+                    .andExpect(status().isCreated())
                     .andExpect(jsonPath("$.request").exists())
                     .andExpect(jsonPath("$.response").exists());
 

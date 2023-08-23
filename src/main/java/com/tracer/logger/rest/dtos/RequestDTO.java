@@ -14,11 +14,14 @@ public class RequestDTO  {
     private String body;
     private String headers;
 
-    public RequestDTO(HttpMethod method, String url, String body, String headers) {
+    private Date dateInit;
+
+    public RequestDTO(HttpMethod method, String url, String body, String headers, Date dateInit) {
         this.method = method;
         this.url = url;
         this.body = body;
         this.headers = headers;
+        this.dateInit = dateInit;
     }
 
     public HttpMethod getMethod() {
@@ -45,6 +48,14 @@ public class RequestDTO  {
         this.url = url;
     }
 
+    public Date getDateInit() {
+        return dateInit;
+    }
+
+    public void setDateInit(Date dateInit) {
+        this.dateInit = dateInit;
+    }
+
     public String getBody() {
         return body;
     }
@@ -57,12 +68,12 @@ public class RequestDTO  {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof RequestDTO that)) return false;
-        return Objects.equals(method, that.method) && Objects.equals(url, that.url) && Objects.equals(body, that.body) && Objects.equals(headers, that.headers);
+        return Objects.equals(method, that.method) && Objects.equals(url, that.url) && Objects.equals(body, that.body) && Objects.equals(headers, that.headers) && Objects.equals(dateInit, that.dateInit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(method, url, body, headers);
+        return Objects.hash(method, url, body, headers, dateInit);
     }
 
     @Override

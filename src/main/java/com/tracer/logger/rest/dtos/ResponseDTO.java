@@ -12,15 +12,17 @@ public class ResponseDTO  {
     private String headers;
     private String body;
     private String error;
+    private Date dateEnd;
 
     public ResponseDTO() {
     }
 
-    public ResponseDTO(String statusCode, String headers, String body, String error) {
+    public ResponseDTO(String statusCode, String headers, String body, String error, Date dateEnd) {
         this.statusCode = statusCode;
         this.headers = headers;
         this.body = body;
         this.error = error;
+        this.dateEnd = dateEnd;
     }
 
     public String getStatusCode() {
@@ -29,6 +31,14 @@ public class ResponseDTO  {
 
     public void setStatusCode(String statusCode) {
         this.statusCode = statusCode;
+    }
+
+    public Date getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(Date dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public String getHeaders() {
@@ -59,12 +69,12 @@ public class ResponseDTO  {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ResponseDTO that)) return false;
-        return Objects.equals(statusCode, that.statusCode) && Objects.equals(headers, that.headers) && Objects.equals(body, that.body) && Objects.equals(error, that.error);
+        return Objects.equals(statusCode, that.statusCode) && Objects.equals(headers, that.headers) && Objects.equals(body, that.body) && Objects.equals(error, that.error) && Objects.equals(dateEnd, that.dateEnd);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(statusCode, headers, body, error);
+        return Objects.hash(statusCode, headers, body, error, dateEnd);
 
     }
 
