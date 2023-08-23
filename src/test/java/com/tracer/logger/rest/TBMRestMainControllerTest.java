@@ -37,14 +37,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TBLRestMainControllerTest {
+public class TBMRestMainControllerTest {
 
 
     private final MockMvc mockMvc;
     private static ObjectMapper objectMapper;
 
     @Autowired
-    public TBLRestMainControllerTest(MockMvc mockMvc) {
+    public TBMRestMainControllerTest(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
     }
 

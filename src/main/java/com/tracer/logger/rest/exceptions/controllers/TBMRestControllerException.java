@@ -2,24 +2,21 @@ package com.tracer.logger.rest.exceptions.controllers;
 
 import com.tracer.logger.rest.exceptions.DateException;
 import com.tracer.logger.rest.exceptions.ErrorMessage;
-import com.tracer.logger.rest.exceptions.TBLRestLogBadRequest;
-import com.tracer.logger.rest.exceptions.TBLRestLogNotFounded;
+import com.tracer.logger.rest.exceptions.TBMRestLogBadRequest;
+import com.tracer.logger.rest.exceptions.TBMRestLogNotFounded;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.text.ParseException;
-import java.time.DateTimeException;
-
 @RestControllerAdvice
 @ComponentScan(basePackages = "com.tracer.logger.rest.controllers")
-public class TBLRestControllerException {
+public class TBMRestControllerException {
 
-    @ExceptionHandler(value = {TBLRestLogNotFounded.class})
+    @ExceptionHandler(value = {TBMRestLogNotFounded.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public ErrorMessage logNotFound(TBLRestLogNotFounded ex) {
+    public ErrorMessage logNotFound(TBMRestLogNotFounded ex) {
 
         return new ErrorMessage(
                 ex.getMessage(),
@@ -28,9 +25,9 @@ public class TBLRestControllerException {
     }
 
 
-    @ExceptionHandler(value = {TBLRestLogBadRequest.class})
+    @ExceptionHandler(value = {TBMRestLogBadRequest.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ErrorMessage logBadRequest(TBLRestLogBadRequest ex) {
+    public ErrorMessage logBadRequest(TBMRestLogBadRequest ex) {
 
         return new ErrorMessage(
                 ex.getMessage(),

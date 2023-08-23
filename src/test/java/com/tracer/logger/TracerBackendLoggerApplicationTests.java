@@ -1,7 +1,7 @@
 package com.tracer.logger;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.tracer.logger.rest.controllers.TBLRestMainController;
+import com.tracer.logger.rest.controllers.TBMRestMainController;
 import com.tracer.logger.rest.jsonser.HttpMethodSerializer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +15,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class TracerBackendLoggerApplicationTests {
 
-    private final TBLRestMainController tblRestMainController;
+    private final TBMRestMainController TBMRestMainController;
 
     @Autowired
-    public TracerBackendLoggerApplicationTests(TBLRestMainController tblRestMainController) {
-        this.tblRestMainController = tblRestMainController;
+    public TracerBackendLoggerApplicationTests(TBMRestMainController TBMRestMainController) {
+        this.TBMRestMainController = TBMRestMainController;
     }
     @Test
     void contextLoads() {
-        assertThat(tblRestMainController).isNotNull();
+        assertThat(TBMRestMainController).isNotNull();
     }
 
     @Bean

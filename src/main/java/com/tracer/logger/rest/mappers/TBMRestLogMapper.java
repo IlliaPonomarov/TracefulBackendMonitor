@@ -5,15 +5,15 @@ import com.tracer.logger.rest.dtos.ResponseDTO;
 import com.tracer.logger.rest.dtos.TBLRestLogDTO;
 import com.tracer.logger.rest.models.Request;
 import com.tracer.logger.rest.models.Response;
-import com.tracer.logger.rest.models.TBLRestLog;
+import com.tracer.logger.rest.models.TBMRestLog;
 
-public class TBLRestLogMapper {
+public class TBMRestLogMapper {
 
-    public static TBLRestLog convertToEntity(TBLRestLogDTO tblLogDTO) {
+    public static TBMRestLog convertToEntity(TBLRestLogDTO tblLogDTO) {
         Request request = RequestMapper.convertToEntity(tblLogDTO.getRequest());
         Response response = ResponseMapper.convertToEntity(tblLogDTO.getResponse());
 
-        return new TBLRestLog(
+        return new TBMRestLog(
                 tblLogDTO.getId(),
                 request,
                 response,
@@ -21,7 +21,7 @@ public class TBLRestLogMapper {
         );
     }
 
-    public static TBLRestLogDTO convertToDTO(TBLRestLog tblLog) {
+    public static TBLRestLogDTO convertToDTO(TBMRestLog tblLog) {
         Request request = tblLog.getRequest();
         Response response = tblLog.getResponse();
 

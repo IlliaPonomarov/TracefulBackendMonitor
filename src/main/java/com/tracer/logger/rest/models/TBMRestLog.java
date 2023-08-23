@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Document(collection = "rest")
-public class TBLRestLog {
+public class TBMRestLog {
 
     @Id
     private String id;
@@ -18,7 +18,7 @@ public class TBLRestLog {
 
 
 
-    public TBLRestLog(String id, Request request, Response response, String service) {
+    public TBMRestLog(String id, Request request, Response response, String service) {
         this.dateInit = new Date();
         this.request = request;
         this.response = response;
@@ -66,8 +66,8 @@ public class TBLRestLog {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TBLRestLog tblRestLog)) return false;
-        return Objects.equals(id, tblRestLog.id) && Objects.equals(dateInit, tblRestLog.dateInit) && Objects.equals(request, tblRestLog.request) && Objects.equals(response, tblRestLog.response) && Objects.equals(service, tblRestLog.service);
+        if (!(o instanceof TBMRestLog TBMRestLog)) return false;
+        return Objects.equals(id, TBMRestLog.id) && Objects.equals(dateInit, TBMRestLog.dateInit) && Objects.equals(request, TBMRestLog.request) && Objects.equals(response, TBMRestLog.response) && Objects.equals(service, TBMRestLog.service);
     }
 
     @Override

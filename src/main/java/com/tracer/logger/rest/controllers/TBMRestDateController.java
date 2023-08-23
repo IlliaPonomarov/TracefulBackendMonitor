@@ -2,10 +2,10 @@ package com.tracer.logger.rest.controllers;
 
 import com.tracer.logger.rest.dtos.TBLRestLogDTO;
 import com.tracer.logger.rest.exceptions.DateException;
-import com.tracer.logger.rest.exceptions.TBLRestLogNotFounded;
-import com.tracer.logger.rest.mappers.TBLRestLogMapper;
-import com.tracer.logger.rest.models.TBLRestLog;
-import com.tracer.logger.rest.services.TBLRestService;
+import com.tracer.logger.rest.exceptions.TBMRestLogNotFounded;
+import com.tracer.logger.rest.mappers.TBMRestLogMapper;
+import com.tracer.logger.rest.models.TBMRestLog;
+import com.tracer.logger.rest.services.TBMRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,29 +14,29 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/rest/date")
-public class TBLRestDateController {
+public class TBMRestDateController {
 
-    private final TBLRestService tblRestService;
+    private final TBMRestService TBMRestService;
 
     @Autowired
-    public TBLRestDateController(TBLRestService tblRestService) {
-        this.tblRestService = tblRestService;
+    public TBMRestDateController(TBMRestService TBMRestService) {
+        this.TBMRestService = TBMRestService;
     }
 
     @GetMapping("/{start}/{end}")
     @ResponseStatus(HttpStatus.FOUND)
     public List<TBLRestLogDTO> findByDate(@PathVariable String start, @PathVariable String end) {
 
-        List<TBLRestLog> tblRestLog = null;
+        List<TBMRestLog> TBMRestLog = null;
         try {
-            tblRestLog = tblRestService.findByDate(start, end);
+            TBMRestLog = TBMRestService.findByDate(start, end);
         } catch (DateException e) {
             throw new DateException(e.getMessage());
         }
-        if (tblRestLog.isEmpty()) {
-            throw new TBLRestLogNotFounded("Log not found");
+        if (TBMRestLog.isEmpty()) {
+            throw new TBMRestLogNotFounded("Log not found");
         }
 
-        return tblRestLog.stream( ).map(TBLRestLogMapper::convertToDTO).toList();
+        return TBMRestLog.stream( ).map(TBMRestLogMapper::convertToDTO).toList();
     }
 }

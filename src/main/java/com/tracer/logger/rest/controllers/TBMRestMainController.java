@@ -2,12 +2,11 @@ package com.tracer.logger.rest.controllers;
 
 
 import com.tracer.logger.rest.dtos.TBLRestLogDTO;
-import com.tracer.logger.rest.exceptions.DateException;
-import com.tracer.logger.rest.exceptions.TBLRestLogBadRequest;
-import com.tracer.logger.rest.exceptions.TBLRestLogNotFounded;
-import com.tracer.logger.rest.mappers.TBLRestLogMapper;
-import com.tracer.logger.rest.models.TBLRestLog;
-import com.tracer.logger.rest.services.TBLRestService;
+import com.tracer.logger.rest.exceptions.TBMRestLogBadRequest;
+import com.tracer.logger.rest.exceptions.TBMRestLogNotFounded;
+import com.tracer.logger.rest.mappers.TBMRestLogMapper;
+import com.tracer.logger.rest.models.TBMRestLog;
+import com.tracer.logger.rest.services.TBMRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -18,14 +17,14 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/rest")
-public class TBLRestMainController {
+public class TBMRestMainController {
 
-    private final TBLRestService tblRestService;
+    private final TBMRestService TBMRestService;
 
 
     @Autowired
-    public TBLRestMainController(TBLRestService tblRestService) {
-        this.tblRestService = tblRestService;
+    public TBMRestMainController(TBMRestService TBMRestService) {
+        this.TBMRestService = TBMRestService;
     }
 
     @PostMapping("/log")
@@ -39,10 +38,10 @@ public class TBLRestMainController {
 
             errors.forEach(error -> errorMessage.append(error.getDefaultMessage()).append(",\t"));
 
-            throw new TBLRestLogBadRequest(errorMessage.toString());
+            throw new TBMRestLogBadRequest(errorMessage.toString());
         }
 
-        tblRestService.log(tblLogDTO);
+        TBMRestService.log(tblLogDTO);
 
         return tblLogDTO;
     }
@@ -50,25 +49,25 @@ public class TBLRestMainController {
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public List<TBLRestLogDTO> findAll() {
-        List<TBLRestLog> tblRestLogs = tblRestService.findAll();
+        List<TBMRestLog> TBMRestLogs = TBMRestService.findAll();
 
-        if (tblRestLogs.isEmpty()) {
-            throw new TBLRestLogNotFounded("No logs found");
+        if (TBMRestLogs.isEmpty()) {
+            throw new TBMRestLogNotFounded("No logs found");
         }
 
-        return tblRestLogs.stream( ).map(TBLRestLogMapper::convertToDTO).toList();
+        return TBMRestLogs.stream( ).map(TBMRestLogMapper::convertToDTO).toList();
     }
 
     @GetMapping("/{uuid}")
     @ResponseStatus(HttpStatus.FOUND)
     public TBLRestLogDTO findByUuid(@PathVariable String uuid) {
-        Optional<TBLRestLog> tblRestLog = tblRestService.findByUUID(uuid);
+        Optional<TBMRestLog> tblRestLog = TBMRestService.findByUUID(uuid);
 
         if (tblRestLog.isEmpty()) {
-            throw new TBLRestLogNotFounded("Log not found");
+            throw new TBMRestLogNotFounded("Log not found");
         }
 
-        return TBLRestLogMapper.convertToDTO(tblRestLog.get());
+        return TBMRestLogMapper.convertToDTO(tblRestLog.get());
     }
 
 
