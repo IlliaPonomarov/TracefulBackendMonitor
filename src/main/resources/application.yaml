@@ -1,8 +1,16 @@
 
+springdoc:
+    api-docs:
+        path: /api-docs
+    swagger-ui:
+        path: /swagger-ui.html
+        enabled: true
+
+
 spring:
   data:
     mongodb:
-      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:53127/tbm}
+      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:51328/tbm}
       database: tbm
       auto-index-creation: true
       authentication-database: admin
