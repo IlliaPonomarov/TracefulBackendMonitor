@@ -7,6 +7,13 @@ import com.tracer.logger.rest.exceptions.TBMRestLogNotFounded;
 import com.tracer.logger.rest.mappers.TBMRestLogMapper;
 import com.tracer.logger.rest.models.TBMRestLog;
 import com.tracer.logger.rest.services.TBMRestService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +32,16 @@ public class TBMRestDateController {
         this.tbmRestService = tbmRestService;
     }
 
+
+    @Operation(summary = "Find a log by between start and end dates", tags = {"RestDateLog"})
+    @Parameter(in = ParameterIn.PATH, name = "start", required = true, description = "Start date")
+    @Parameter(in = ParameterIn.PATH, name = "end", required = true, description = "End date")
+    @Parameter(in = ParameterIn.QUERY, name = "service", required = true, description = "Service name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Log found" , content = @Content(schema = @Schema(implementation = TBMRestLogDTO.class))),
+            @ApiResponse(responseCode = "404", description = "Log not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @GetMapping("/{start}/{end}")
     @ResponseStatus(HttpStatus.FOUND)
     public List<TBMRestLogDTO> findRestLogByBetweenDateAndService(@PathVariable String start, @PathVariable String end, @RequestParam String service) {

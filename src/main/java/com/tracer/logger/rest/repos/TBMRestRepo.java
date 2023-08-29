@@ -18,5 +18,5 @@ public interface TBMRestRepo extends MongoRepository<TBMRestLog, UUID> {
 
     TBMRestLog deleteByService(String service);
 
-    void deleteById(UUID id);
+    void deleteById(String id);
 }

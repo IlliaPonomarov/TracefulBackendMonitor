@@ -48,7 +48,7 @@ public class TBMRestService {
         return tbmRestRepo.findAll();
     }
 
-    public Optional<TBMRestLog> findById(UUID uuid) {
+    public Optional<TBMRestLog> findById(String uuid) {
         return tbmRestRepo.findById(uuid);
     }
 
@@ -74,8 +74,12 @@ public class TBMRestService {
         return tbmRestRepo.deleteByService(service);
     }
 
-    public void deleteById(UUID id) {
+    public void deleteById(String id) {
         Optional<TBMRestLog> tbmRestLogOptional = tbmRestRepo.findById(id);
+
+        if (tbmRestLogOptional.isEmpty()) {
+            throw new ServiceDoesNotExistException("Service with id: " + id + " does not exist");
+        }
 
         tbmRestRepo.deleteById(id);
     }
