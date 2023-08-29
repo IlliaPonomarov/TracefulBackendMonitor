@@ -7,9 +7,16 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface TBMRestRepo extends MongoRepository<TBMRestLog, String> {
+public interface TBMRestRepo extends MongoRepository<TBMRestLog, UUID> {
     Optional<TBMRestLog> findById(String id);
-    List<TBMRestLog> findByDateInitBetween(Date dateInit, Date dateEnd);
+    List<TBMRestLog> findByDateInitBetweenAndService(Date dateInit, Date dateEnd, String service);
+
+    Optional<TBMRestLog> findByService(String service);
+
+    TBMRestLog deleteByService(String service);
+
+    void deleteById(UUID id);
 }

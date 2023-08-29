@@ -1,6 +1,5 @@
 package com.tracer.logger.rest;
 
-import static org.springframework.data.mongodb.util.BsonUtils.toJson;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -9,21 +8,16 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.tracer.logger.rest.dtos.RequestDTO;
 import com.tracer.logger.rest.dtos.ResponseDTO;
-import com.tracer.logger.rest.dtos.TBLRestLogDTO;
-import com.tracer.logger.rest.jsonser.HttpMethodSerializer;
-import com.tracer.logger.rest.models.Request;
+import com.tracer.logger.rest.dtos.TBMRestLogDTO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -31,7 +25,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -80,16 +73,16 @@ public class TBMRestMainControllerTest {
         String errorMessage = "errorMessage";
         HttpMethod method = HttpMethod.GET;
 
-        RequestDTO requestDTO = new RequestDTO(method, url, header, body, new Date());
-        ResponseDTO responseDTO = new ResponseDTO(httpStatusCode, header, body, errorMessage, new Date());
+        List<RequestDTO> requestDTO = List.of(new RequestDTO(method, url, body, header, new Date()));
+        List<ResponseDTO> responseDTO = List.of(new ResponseDTO(httpStatusCode, errorMessage, body, header, new Date()));
 
-        TBLRestLogDTO tblRestLogDTO = new TBLRestLogDTO(uuid.toString(), requestDTO, responseDTO, "BusinessService");
+        TBMRestLogDTO TBMRestLogDTO = new TBMRestLogDTO(uuid.toString(), requestDTO, responseDTO, "BusinessService");
         this.objectMapper = new ObjectMapper();
         this.objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
         String json = "";
         try {
-            json = objectMapper.writeValueAsString(tblRestLogDTO);
+            json = objectMapper.writeValueAsString(TBMRestLogDTO);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
