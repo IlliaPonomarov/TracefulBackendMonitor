@@ -3,8 +3,10 @@ package com.tracer.logger.rest.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
+import java.util.List;
 
 @Document(collection = "rest")
 public class TBMRestLog {
@@ -13,12 +15,12 @@ public class TBMRestLog {
     private String id;
     private Date dateInit;
     private String service;
-    private Request request;
-    private Response response;
+    private List<Request> request = new ArrayList<>();
+    private List<Response> response = new ArrayList<>();
 
 
 
-    public TBMRestLog(String id, Request request, Response response, String service) {
+    public TBMRestLog(String id, List<Request> request, List<Response> response, String service) {
         this.dateInit = new Date();
         this.request = request;
         this.response = response;
@@ -39,19 +41,19 @@ public class TBMRestLog {
         this.dateInit = dateInit;
     }
 
-    public Request getRequest() {
+    public List<Request> getRequest() {
         return request;
     }
 
-    public void setRequest(Request request) {
+    public void setRequest(List<Request> request) {
         this.request = request;
     }
 
-    public Response getResponse() {
+    public List<Response> getResponse() {
         return response;
     }
 
-    public void setResponse(Response response) {
+    public void setResponse(List<Response> response) {
         this.response = response;
     }
 
