@@ -2,8 +2,8 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/test
-      database: test
+      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:53127/tbm}
+      database: tbm
       auto-index-creation: true
       authentication-database: admin
       write-concern: majority
