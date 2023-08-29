@@ -14,7 +14,10 @@ public interface TBMRestRepo extends MongoRepository<TBMRestLog, UUID> {
     Optional<TBMRestLog> findById(String id);
     List<TBMRestLog> findByDateInitBetweenAndService(Date dateInit, Date dateEnd, String service);
 
-    Optional<TBMRestLog> findByService(String service);
+    List<TBMRestLog> findByDateInitAfterAndService(Date dateInit, String service);
+    List<TBMRestLog> findByDateInitBeforeAndService(Date dateInit, String service);
+
+    Optional<List<TBMRestLog>> findByService(String service);
 
     TBMRestLog deleteByService(String service);
 

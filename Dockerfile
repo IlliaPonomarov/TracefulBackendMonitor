@@ -1,5 +1,4 @@
 
-# spring boot app
 # build stage
 FROM openjdk:17-alpine as build
 

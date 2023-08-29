@@ -39,7 +39,7 @@ public class TBMRestMainController {
         this.tbmRestService = tbmRestService;
     }
 
-    @Operation(summary = "Log a request and response", tags = {"RestLog"})
+    @Operation(summary = "Log a request and response", tags = {"Rest Log Service"})
     @Parameter(in = ParameterIn.DEFAULT, name = "tbmLogDTO", required = true, description = "TBMRestLogDTO")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Log created" , content = @Content(schema = @Schema(implementation = TBMRestLogDTO.class))),
@@ -68,7 +68,7 @@ public class TBMRestMainController {
         return tbmRestLogDTO;
     }
 
-    @Operation(summary = "Find all logs", tags = {"RestLog"})
+    @Operation(summary = "Find all logs", tags = {"Rest Log Service"})
     @Parameter(in = ParameterIn.DEFAULT, name = "tbmLogDTO", required = true, description = "Get all logs")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Logs found" , content = @Content(schema = @Schema(implementation = TBMRestLogDTO.class))),
@@ -88,7 +88,7 @@ public class TBMRestMainController {
     }
 
 
-    @Operation(summary = "Find logs by service id", tags = {"RestLog"})
+    @Operation(summary = "Find logs by service id", tags = {"Rest Log Service"})
     @Parameter(in = ParameterIn.PATH, name = "service", required = true, description = "Service id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Logs found" , content = @Content(schema = @Schema(implementation = TBMRestLogDTO.class))),
@@ -106,26 +106,9 @@ public class TBMRestMainController {
         return TBMRestLogMapper.convertToDTO(tblRestLog.get());
     }
 
-    @Operation(summary = "Delete logs by service id", tags = {"RestLog"})
-    @Parameter(in = ParameterIn.PATH, name = "uuid", required = true, description = "Service id")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Logs deleted" , content = @Content(schema = @Schema(implementation = TBMRestLogDTO.class))),
-            @ApiResponse(responseCode = "404", description = "Logs not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
-    @DeleteMapping("/{uuid}")
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteById(@PathVariable String uuid) {
 
-        Optional<TBMRestLog> tblRestLog = tbmRestService.findById(uuid);
 
-        if (tblRestLog.isEmpty())
-            throw new ServiceNotFoundException(String.format("Service %s not found", uuid));
-
-        tbmRestService.deleteById(uuid);
-    }
-
-    @Operation(summary = "Delete logs by service name", tags = {"RestLog"})
+    @Operation(summary = "Delete logs by service name", tags = {"Rest Log Service"})
     @Parameter(in = ParameterIn.PATH, name = "service", required = true, description = "Service name")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Logs deleted" , content = @Content(schema = @Schema(implementation = TBMRestLogDTO.class))),
@@ -135,7 +118,7 @@ public class TBMRestMainController {
     @DeleteMapping("/service/{service}")
     @ResponseStatus(HttpStatus.OK)
     public TBMRestLog deleteByService(@PathVariable String service) {
-        Optional<TBMRestLog> tblRestLog = tbmRestService.findByService(service);
+        Optional<List<TBMRestLog>> tblRestLog = tbmRestService.findByService(service);
 
         if (tblRestLog.isEmpty())
             throw new ServiceNotFoundException(String.format("Service %s not found", service));
@@ -143,7 +126,7 @@ public class TBMRestMainController {
         return tbmRestService.deleteByService(service);
     }
 
-    @Operation(summary = "Delete all logs", tags = {"RestLog"})
+    @Operation(summary = "Delete all logs", tags = {"Rest Log Service"})
     @Parameter(in = ParameterIn.PATH, name = "service", required = true, description = "Service name")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Logs deleted" , content = @Content(schema = @Schema(implementation = TBMRestLogDTO.class))),

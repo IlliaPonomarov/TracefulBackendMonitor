@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 public class TBMRestLogMapper {
 
     public static TBMRestLog convertToEntity(TBMRestLogDTO tblLogDTO) {
-        List<Request> request = new ArrayList<>(tblLogDTO.getRequest().stream().map(RequestMapper::convertToEntity).toList());
-        List<Response> response = new ArrayList<>(tblLogDTO.getResponse().stream().map(ResponseMapper::convertToEntity).toList());
+        Request request = RequestMapper.convertToEntity(tblLogDTO.getRequest());
+        Response response = ResponseMapper.convertToEntity(tblLogDTO.getResponse());
 
         return new TBMRestLog(
                 tblLogDTO.getId(),
@@ -26,11 +26,8 @@ public class TBMRestLogMapper {
     }
 
     public static TBMRestLogDTO convertToDTO(TBMRestLog tblLog) {
-        List<Request> request = tblLog.getRequest();
-        List<Response> response = tblLog.getResponse();
-
-        List<RequestDTO> requestDTO = request.stream().map(RequestMapper::convertToDTO).toList();
-        List<ResponseDTO> responseDTO = response.stream().map(ResponseMapper::convertToDTO).toList();
+        RequestDTO requestDTO = RequestMapper.convertToDTO(tblLog.getRequest());
+        ResponseDTO responseDTO = ResponseMapper.convertToDTO(tblLog.getResponse());
 
         return new TBMRestLogDTO(
                 tblLog.getId(),

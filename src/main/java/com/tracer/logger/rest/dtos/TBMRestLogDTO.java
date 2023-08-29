@@ -11,15 +11,15 @@ public class TBMRestLogDTO {
 
     private String service;
 
-    private List<RequestDTO> request = new ArrayList<>();
+    private RequestDTO request;
 
-    private List<ResponseDTO> response = new ArrayList<>();
+    private ResponseDTO response;
     private Date dateInit;
 
     public TBMRestLogDTO() {
     }
 
-    public TBMRestLogDTO(String id, List<RequestDTO> requestDTO, List<ResponseDTO> responseDTO, String service) {
+    public TBMRestLogDTO(String id, RequestDTO requestDTO, ResponseDTO responseDTO, String service) {
         this.request = requestDTO;
         this.response = responseDTO;
         this.service = service;
@@ -39,19 +39,20 @@ public class TBMRestLogDTO {
         this.dateInit = dateInit;
     }
 
-    public List<RequestDTO> getRequest() {
+
+    public RequestDTO getRequest() {
         return request;
     }
 
-    public void setRequest(List<RequestDTO> request) {
+    public void setRequest(RequestDTO request) {
         this.request = request;
     }
 
-    public List<ResponseDTO> getResponse() {
+    public ResponseDTO getResponse() {
         return response;
     }
 
-    public void setResponse(List<ResponseDTO> response) {
+    public void setResponse(ResponseDTO response) {
         this.response = response;
     }
 

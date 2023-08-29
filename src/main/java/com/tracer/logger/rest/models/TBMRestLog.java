@@ -15,12 +15,12 @@ public class TBMRestLog {
     private String id;
     private Date dateInit;
     private String service;
-    private List<Request> request = new ArrayList<>();
-    private List<Response> response = new ArrayList<>();
+    private Request request;
+    private Response response;
 
 
 
-    public TBMRestLog(String id, List<Request> request, List<Response> response, String service) {
+    public TBMRestLog(String id, Request request, Response response, String service) {
         this.dateInit = new Date();
         this.request = request;
         this.response = response;
@@ -41,19 +41,19 @@ public class TBMRestLog {
         this.dateInit = dateInit;
     }
 
-    public List<Request> getRequest() {
+    public Request getRequest() {
         return request;
     }
 
-    public void setRequest(List<Request> request) {
+    public void setRequest(Request request) {
         this.request = request;
     }
 
-    public List<Response> getResponse() {
+    public Response getResponse() {
         return response;
     }
 
-    public void setResponse(List<Response> response) {
+    public void setResponse(Response response) {
         this.response = response;
     }
 
