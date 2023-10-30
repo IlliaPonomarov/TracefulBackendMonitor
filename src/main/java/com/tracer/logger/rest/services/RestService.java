@@ -4,7 +4,7 @@ import com.tracer.logger.rest.dtos.TBMRestLogDTO;
 import com.tracer.logger.rest.exceptions.DateException;
 import com.tracer.logger.rest.exceptions.ServiceDoesNotExistException;
 import com.tracer.logger.rest.mappers.TBMRestLogMapper;
-import com.tracer.logger.rest.models.TBMRestLog;
+import com.tracer.logger.rest.models.RestLog;
 import com.tracer.logger.rest.repos.TBMRestRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mapping.MappingException;
@@ -26,27 +26,27 @@ public class RestService {
     }
 
 
-    public TBMRestLog log(TBMRestLogDTO tbmRestLogDTO) {
-        TBMRestLog newTbmRestLog = null;
+    public RestLog log(TBMRestLogDTO tbmRestLogDTO) {
+        RestLog newRestLog = null;
 
         try {
-            newTbmRestLog = TBMRestLogMapper.convertToEntity(tbmRestLogDTO);
+            newRestLog = TBMRestLogMapper.convertToEntity(tbmRestLogDTO);
         }
         catch (Exception e) {
             throw new MappingException(e.getMessage());
         }
-        return tbmRestRepo.save(newTbmRestLog);
+        return tbmRestRepo.save(newRestLog);
     }
 
-    public List<TBMRestLog> findAll() {
+    public List<RestLog> findAll() {
         return tbmRestRepo.findAll();
     }
 
-    public Optional<TBMRestLog> findById(String uuid) {
+    public Optional<RestLog> findById(String uuid) {
         return tbmRestRepo.findById(uuid);
     }
 
-    public List<TBMRestLog> findByBetweenDateAndService(String start, String end, String service) {
+    public List<RestLog> findByBetweenDateAndService(String start, String end, String service) {
 
         Date startDate = null;
         Date endDate = null;
@@ -60,16 +60,16 @@ public class RestService {
         return tbmRestRepo.findByDateInitBetweenAndService(startDate, endDate, service);
     }
 
-    public Optional<List<TBMRestLog>> findByService(String service) {
+    public Optional<List<RestLog>> findByService(String service) {
         return tbmRestRepo.findByService(service);
     }
 
-    public TBMRestLog deleteByService(String service) {
+    public RestLog deleteByService(String service) {
         return tbmRestRepo.deleteByService(service);
     }
 
     public void deleteById(String id) {
-        Optional<TBMRestLog> tbmRestLogOptional = tbmRestRepo.findById(id);
+        Optional<RestLog> tbmRestLogOptional = tbmRestRepo.findById(id);
 
         if (tbmRestLogOptional.isEmpty()) {
             throw new ServiceDoesNotExistException("Service with id: " + id + " does not exist");
@@ -82,7 +82,7 @@ public class RestService {
         tbmRestRepo.deleteAll();
     }
 
-    public List<TBMRestLog> findByStartDateAndService(String start, String service) {
+    public List<RestLog> findByStartDateAndService(String start, String service) {
         Date startDate = null;
         try {
             startDate = dateService.convertStringToDate(start);
@@ -93,7 +93,7 @@ public class RestService {
         return tbmRestRepo.findByDateInitAfterAndService(startDate, service);
     }
 
-    public List<TBMRestLog> findByEndDateAndService(String end, String service) {
+    public List<RestLog> findByEndDateAndService(String end, String service) {
         Date endDate = null;
         try {
             endDate = dateService.convertStringToDate(end);

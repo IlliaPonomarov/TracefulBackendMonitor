@@ -6,7 +6,7 @@ import com.tracer.logger.rest.exceptions.ServiceNotFoundException;
 import com.tracer.logger.rest.exceptions.TBMRestLogBadRequest;
 import com.tracer.logger.rest.exceptions.TBMRestLogNotFounded;
 import com.tracer.logger.rest.mappers.TBMRestLogMapper;
-import com.tracer.logger.rest.models.TBMRestLog;
+import com.tracer.logger.rest.models.RestLog;
 import com.tracer.logger.rest.services.RestService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -47,7 +47,7 @@ public class TBMRestMainController {
     public TBMRestLogDTO log(@RequestBody TBMRestLogDTO tbmLogDTO, BindingResult bindingResult) {
 
         TBMRestLogDTO tbmRestLogDTO = null;
-        TBMRestLog tbmRestLog = null;
+        RestLog restLog = null;
 
         if (bindingResult.hasErrors()) {
 
@@ -58,8 +58,8 @@ public class TBMRestMainController {
 
             throw new TBMRestLogBadRequest(errorMessage.toString());
         }
-        tbmRestLog = restService.log(tbmLogDTO);
-        tbmRestLogDTO = TBMRestLogMapper.convertToDTO(tbmRestLog);
+        restLog = restService.log(tbmLogDTO);
+        tbmRestLogDTO = TBMRestLogMapper.convertToDTO(restLog);
 
         return tbmRestLogDTO;
     }
@@ -74,12 +74,12 @@ public class TBMRestMainController {
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public List<TBMRestLogDTO> findAll() {
-        List<TBMRestLog> TBMRestLogs = new ArrayList<>(restService.findAll());
+        List<RestLog> RestLogs = new ArrayList<>(restService.findAll());
 
-        if (TBMRestLogs.isEmpty())
+        if (RestLogs.isEmpty())
             throw new TBMRestLogNotFounded("No logs found");
 
-        return TBMRestLogs.stream( ).map(TBMRestLogMapper::convertToDTO).toList();
+        return RestLogs.stream( ).map(TBMRestLogMapper::convertToDTO).toList();
     }
 
 
@@ -93,7 +93,7 @@ public class TBMRestMainController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
     public TBMRestLogDTO findByUUID(@PathVariable String id) {
-        Optional<TBMRestLog> tblRestLog = restService.findById(id);
+        Optional<RestLog> tblRestLog = restService.findById(id);
 
         if (tblRestLog.isEmpty())
             throw new TBMRestLogNotFounded("Log not found");
@@ -112,8 +112,8 @@ public class TBMRestMainController {
     })
     @DeleteMapping("/service/{service}")
     @ResponseStatus(HttpStatus.OK)
-    public TBMRestLog deleteByService(@PathVariable String service) {
-        Optional<List<TBMRestLog>> tblRestLog = restService.findByService(service);
+    public RestLog deleteByService(@PathVariable String service) {
+        Optional<List<RestLog>> tblRestLog = restService.findByService(service);
 
         if (tblRestLog.isEmpty())
             throw new ServiceNotFoundException(String.format("Service %s not found", service));

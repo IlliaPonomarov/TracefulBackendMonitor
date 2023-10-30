@@ -1,6 +1,6 @@
 package com.tracer.logger.rest.repos;
 
-import com.tracer.logger.rest.models.TBMRestLog;
+import com.tracer.logger.rest.models.RestLog;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,16 +10,16 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface TBMRestRepo extends MongoRepository<TBMRestLog, UUID> {
-    Optional<TBMRestLog> findById(String id);
-    List<TBMRestLog> findByDateInitBetweenAndService(Date dateInit, Date dateEnd, String service);
+public interface TBMRestRepo extends MongoRepository<RestLog, UUID> {
+    Optional<RestLog> findById(String id);
+    List<RestLog> findByDateInitBetweenAndService(Date dateInit, Date dateEnd, String service);
 
-    List<TBMRestLog> findByDateInitAfterAndService(Date dateInit, String service);
-    List<TBMRestLog> findByDateInitBeforeAndService(Date dateInit, String service);
+    List<RestLog> findByDateInitAfterAndService(Date dateInit, String service);
+    List<RestLog> findByDateInitBeforeAndService(Date dateInit, String service);
 
-    Optional<List<TBMRestLog>> findByService(String service);
+    Optional<List<RestLog>> findByService(String service);
 
-    TBMRestLog deleteByService(String service);
+    RestLog deleteByService(String service);
 
     void deleteById(String id);
 }

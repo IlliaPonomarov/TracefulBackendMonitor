@@ -5,7 +5,7 @@ import com.tracer.logger.rest.exceptions.DateException;
 import com.tracer.logger.rest.exceptions.ServiceNotFoundException;
 import com.tracer.logger.rest.exceptions.TBMRestLogNotFounded;
 import com.tracer.logger.rest.mappers.TBMRestLogMapper;
-import com.tracer.logger.rest.models.TBMRestLog;
+import com.tracer.logger.rest.models.RestLog;
 import com.tracer.logger.rest.services.RestService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -46,23 +46,23 @@ public class TBMRestDateController {
     @ResponseStatus(HttpStatus.FOUND)
     public List<TBMRestLogDTO> findByBetweenDateAndService(@PathVariable String start, @PathVariable String end, @RequestParam String service) {
 
-        List<TBMRestLog> TBMRestLog = null;
-        Optional<List<TBMRestLog>> tbmRestLog = restService.findByService(service);
+        List<RestLog> RestLog = null;
+        Optional<List<RestLog>> tbmRestLog = restService.findByService(service);
 
         if (tbmRestLog.isEmpty())
             throw new ServiceNotFoundException(String.format("Service %s not found", service));
 
         try {
-            TBMRestLog = restService.findByBetweenDateAndService(start, end, service);
+            RestLog = restService.findByBetweenDateAndService(start, end, service);
         } catch (DateException e) {
             throw new DateException(e.getMessage());
         }
 
-        if (TBMRestLog.isEmpty()) {
+        if (RestLog.isEmpty()) {
             throw new TBMRestLogNotFounded("Log not found");
         }
 
-        return TBMRestLog.stream( ).map(TBMRestLogMapper::convertToDTO).toList();
+        return RestLog.stream( ).map(TBMRestLogMapper::convertToDTO).toList();
     }
 
     @Operation(summary = "Find a log by start date", tags = {"Rest Log Date Service"})
@@ -77,22 +77,22 @@ public class TBMRestDateController {
     @ResponseStatus(HttpStatus.FOUND)
     public List<TBMRestLogDTO> findByDateAndService(@PathVariable String start, @RequestParam String service) {
 
-        List<TBMRestLog> tbmRestLogs = null;
-        Optional<List<TBMRestLog>> tbmRestLog = restService.findByService(service);
+        List<RestLog> restLogs = null;
+        Optional<List<RestLog>> tbmRestLog = restService.findByService(service);
 
         if (tbmRestLog.isEmpty())
             throw new ServiceNotFoundException(String.format("Service %s not found", service));
 
         try {
-            tbmRestLogs = restService.findByStartDateAndService(start, service);
+            restLogs = restService.findByStartDateAndService(start, service);
         } catch (DateException e) {
             throw new DateException(e.getMessage());
         }
-        if (tbmRestLogs.isEmpty()) {
+        if (restLogs.isEmpty()) {
             throw new TBMRestLogNotFounded("Log not found");
         }
 
-        return tbmRestLogs.stream( ).map(TBMRestLogMapper::convertToDTO).toList();
+        return restLogs.stream( ).map(TBMRestLogMapper::convertToDTO).toList();
     }
 
     @Operation(summary = "Find a log by end date", tags = {"Rest Log Date Service"})
@@ -107,21 +107,21 @@ public class TBMRestDateController {
     @ResponseStatus(HttpStatus.FOUND)
     public List<TBMRestLogDTO> findByEndDateAndService(@PathVariable String end, @RequestParam String service) {
 
-        List<TBMRestLog> tbmRestLogs = null;
-        Optional<List<TBMRestLog>> tbmRestLog = restService.findByService(service);
+        List<RestLog> restLogs = null;
+        Optional<List<RestLog>> tbmRestLog = restService.findByService(service);
 
         if (tbmRestLog.isEmpty())
             throw new ServiceNotFoundException(String.format("Service %s not found", service));
 
         try {
-            tbmRestLogs = restService.findByEndDateAndService(end, service);
+            restLogs = restService.findByEndDateAndService(end, service);
         } catch (DateException e) {
             throw new DateException(e.getMessage());
         }
-        if (tbmRestLogs.isEmpty()) {
+        if (restLogs.isEmpty()) {
             throw new TBMRestLogNotFounded("Log not found");
         }
 
-        return tbmRestLogs.stream( ).map(TBMRestLogMapper::convertToDTO).toList();
+        return restLogs.stream( ).map(TBMRestLogMapper::convertToDTO).toList();
     }
 }

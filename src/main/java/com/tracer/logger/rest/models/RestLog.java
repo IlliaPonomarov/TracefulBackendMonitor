@@ -3,13 +3,11 @@ package com.tracer.logger.rest.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
-import java.util.List;
 
 @Document(collection = "rest")
-public class TBMRestLog {
+public class RestLog {
 
     @Id
     private String id;
@@ -20,7 +18,7 @@ public class TBMRestLog {
 
 
 
-    public TBMRestLog(String id, Request request, Response response, String service) {
+    public RestLog(String id, Request request, Response response, String service) {
         this.dateInit = new Date();
         this.request = request;
         this.response = response;
@@ -68,8 +66,8 @@ public class TBMRestLog {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TBMRestLog TBMRestLog)) return false;
-        return Objects.equals(id, TBMRestLog.id) && Objects.equals(dateInit, TBMRestLog.dateInit) && Objects.equals(request, TBMRestLog.request) && Objects.equals(response, TBMRestLog.response) && Objects.equals(service, TBMRestLog.service);
+        if (!(o instanceof RestLog RestLog)) return false;
+        return Objects.equals(id, RestLog.id) && Objects.equals(dateInit, RestLog.dateInit) && Objects.equals(request, RestLog.request) && Objects.equals(response, RestLog.response) && Objects.equals(service, RestLog.service);
     }
 
     @Override

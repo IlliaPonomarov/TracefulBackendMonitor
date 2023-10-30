@@ -1,5 +1,6 @@
 package com.tracer.logger.rest.models;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
 import java.util.Date;
@@ -9,7 +10,7 @@ import java.util.UUID;
 public class Response {
 
     private UUID id;
-    private String statusCode;
+    private HttpStatus statusCode;
 
     private String headers;
 
@@ -18,7 +19,7 @@ public class Response {
     private String error;
     private Date date;
 
-    public Response( String statusCode, String headers, String body, String error) {
+    public Response(HttpStatus statusCode, String headers, String body, String error) {
         this.id = UUID.randomUUID();
         this.date = new Date();
         this.statusCode = statusCode;
@@ -36,11 +37,11 @@ public class Response {
         this.id = id;
     }
 
-    public String getStatusCode() {
+    public HttpStatus getStatusCode() {
         return statusCode;
     }
 
-    public void setStatusCode(String statusCode) {
+    public void setStatusCode(HttpStatus statusCode) {
         this.statusCode = statusCode;
     }
 

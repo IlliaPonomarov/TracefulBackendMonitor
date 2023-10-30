@@ -1,0 +1,173 @@
+{
+  "restLogs": [
+    {
+      "id": "1",
+      "service": "ServiceA",
+      "request": {
+        "method": "GET",
+        "url": "https://api.example.com/resource/1",
+        "body": "",
+        "headers": ""
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": "{}",
+        "body": "{\"key\": \"value\"}",
+        "error": ""
+      }
+    },
+    {
+      "id": "2",
+      "service": "ServiceB",
+      "request": {
+        "method": "POST",
+        "url": "https://api.example.com/resource",
+        "body": "{\"data\": \"example\"}",
+        "headers": ""
+
+      },
+      "response": {
+        "statusCode": 201,
+        "headers": "{}",
+        "body": "{\"id\": 123}",
+        "error": ""
+      }
+    },
+    {
+      "id": "3",
+      "service": "ServiceC",
+      "request": {
+        "method": "PUT",
+        "url": "https://api.example.com/resource/123",
+        "body": "{\"data\": \"updated\"}",
+        "headers": ""
+
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": "{}",
+        "body": "{\"message\": \"Resource updated successfully\"}",
+        "error": ""
+
+      }
+    },
+    {
+      "id": "4",
+      "service": "ServiceD",
+      "request": {
+        "method": "DELETE",
+        "url": "https://api.example.com/resource/456",
+        "body": "",
+        "headers": ""
+
+      },
+      "response": {
+        "statusCode": 204,
+        "headers": "{}",
+        "body": "",
+        "error": ""
+      }
+    },
+    {
+      "id": "5",
+      "service": "ServiceE",
+      "request": {
+        "method": "GET",
+        "url": "https://api.example.com/users/1",
+        "body": "",
+        "headers": ""
+
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": "{}",
+        "body": "{\"id\": 1, \"name\": \"Alice\"}",
+        "error": ""
+      }
+    },
+    {
+      "id": "6",
+      "service": "ServiceF",
+      "request": {
+        "method": "POST",
+        "url": "https://api.example.com/orders",
+        "body": "{\"product\": \"item\", \"quantity\": 2}",
+        "headers": ""
+
+      },
+      "response": {
+        "statusCode": 500,
+        "headers": "{}",
+        "body": "",
+        "error": "Internal Server Error"
+      }
+    },
+    {
+      "id": "7",
+      "service": "ServiceG",
+      "request": {
+        "method": "GET",
+        "url": "https://api.example.com/products",
+        "body": "",
+        "headers": ""
+
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": "{}",
+        "body": "[{\"id\": 1, \"name\": \"Product A\"}, {\"id\": 2, \"name\": \"Product B\"}]",
+        "error": ""
+      }
+    },
+    {
+      "id": "8",
+      "service": "ServiceH",
+      "request": {
+        "method": "PUT",
+        "url": "https://api.example.com/orders/123",
+        "body": "{\"status\": \"shipped\"}",
+        "headers": ""
+
+      },
+      "response": {
+        "statusCode": 204,
+        "headers": "{}",
+        "body": "",
+        "error": ""
+      }
+    },
+    {
+      "id": "9",
+      "service": "ServiceI",
+      "request": {
+        "method": "PATCH",
+        "url": "https://api.example.com/users/2",
+        "body": "{\"name\": \"Bob\"}",
+        "headers": ""
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": "{}",
+        "body": "{\"message\": \"User updated successfully\"}",
+        "error": ""
+      }
+    },
+    {
+      "id": "10",
+      "service": "ServiceJ",
+      "request": {
+        "method": "DELETE",
+        "url": "https://api.example.com/orders/456",
+        "body": "",
+        "headers": ""
+
+      },
+      "response": {
+        "statusCode": 404,
+        "headers": "{}",
+        "body": "",
+        "error": "Resource Not Found"
+      }
+    }
+  ]
+}
