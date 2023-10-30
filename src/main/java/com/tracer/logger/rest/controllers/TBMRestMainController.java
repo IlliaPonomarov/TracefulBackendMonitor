@@ -1,7 +1,7 @@
 package com.tracer.logger.rest.controllers;
 
 
-import com.tracer.logger.rest.dtos.TBMRestLogDTO;
+import com.tracer.logger.rest.dtos.RestLogDTO;
 import com.tracer.logger.rest.exceptions.ServiceNotFoundException;
 import com.tracer.logger.rest.exceptions.TBMRestLogBadRequest;
 import com.tracer.logger.rest.exceptions.TBMRestLogNotFounded;
@@ -38,15 +38,15 @@ public class TBMRestMainController {
     @Operation(summary = "Log a request and response", tags = {"Rest Log Service"})
     @Parameter(in = ParameterIn.DEFAULT, name = "tbmLogDTO", required = true, description = "TBMRestLogDTO")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Log created" , content = @Content(schema = @Schema(implementation = TBMRestLogDTO.class))),
+            @ApiResponse(responseCode = "201", description = "Log created" , content = @Content(schema = @Schema(implementation = RestLogDTO.class))),
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping("/log")
     @ResponseStatus(HttpStatus.CREATED)
-    public TBMRestLogDTO log(@RequestBody TBMRestLogDTO tbmLogDTO, BindingResult bindingResult) {
+    public RestLogDTO log(@RequestBody RestLogDTO tbmLogDTO, BindingResult bindingResult) {
 
-        TBMRestLogDTO tbmRestLogDTO = null;
+        RestLogDTO restLogDTO = null;
         RestLog restLog = null;
 
         if (bindingResult.hasErrors()) {
@@ -59,21 +59,21 @@ public class TBMRestMainController {
             throw new TBMRestLogBadRequest(errorMessage.toString());
         }
         restLog = restService.log(tbmLogDTO);
-        tbmRestLogDTO = TBMRestLogMapper.convertToDTO(restLog);
+        restLogDTO = TBMRestLogMapper.convertToDTO(restLog);
 
-        return tbmRestLogDTO;
+        return restLogDTO;
     }
 
     @Operation(summary = "Find all logs", tags = {"Rest Log Service"})
     @Parameter(in = ParameterIn.DEFAULT, name = "tbmLogDTO", required = true, description = "Get all logs")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Logs found" , content = @Content(schema = @Schema(implementation = TBMRestLogDTO.class))),
+            @ApiResponse(responseCode = "200", description = "Logs found" , content = @Content(schema = @Schema(implementation = RestLogDTO.class))),
             @ApiResponse(responseCode = "404", description = "Logs not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
-    public List<TBMRestLogDTO> findAll() {
+    public List<RestLogDTO> findAll() {
         List<RestLog> RestLogs = new ArrayList<>(restService.findAll());
 
         if (RestLogs.isEmpty())
@@ -86,13 +86,13 @@ public class TBMRestMainController {
     @Operation(summary = "Find logs by service id", tags = {"Rest Log Service"})
     @Parameter(in = ParameterIn.PATH, name = "service", required = true, description = "Service id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Logs found" , content = @Content(schema = @Schema(implementation = TBMRestLogDTO.class))),
+            @ApiResponse(responseCode = "200", description = "Logs found" , content = @Content(schema = @Schema(implementation = RestLogDTO.class))),
             @ApiResponse(responseCode = "404", description = "Logs not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    public TBMRestLogDTO findByUUID(@PathVariable String id) {
+    public RestLogDTO findByUUID(@PathVariable String id) {
         Optional<RestLog> tblRestLog = restService.findById(id);
 
         if (tblRestLog.isEmpty())
@@ -106,7 +106,7 @@ public class TBMRestMainController {
     @Operation(summary = "Delete logs by service name", tags = {"Rest Log Service"})
     @Parameter(in = ParameterIn.PATH, name = "service", required = true, description = "Service name")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Logs deleted" , content = @Content(schema = @Schema(implementation = TBMRestLogDTO.class))),
+            @ApiResponse(responseCode = "200", description = "Logs deleted" , content = @Content(schema = @Schema(implementation = RestLogDTO.class))),
             @ApiResponse(responseCode = "404", description = "Logs not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
@@ -124,7 +124,7 @@ public class TBMRestMainController {
     @Operation(summary = "Delete all logs", tags = {"Rest Log Service"})
     @Parameter(in = ParameterIn.PATH, name = "service", required = true, description = "Service name")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Logs deleted" , content = @Content(schema = @Schema(implementation = TBMRestLogDTO.class))),
+            @ApiResponse(responseCode = "200", description = "Logs deleted" , content = @Content(schema = @Schema(implementation = RestLogDTO.class))),
             @ApiResponse(responseCode = "404", description = "Logs not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })

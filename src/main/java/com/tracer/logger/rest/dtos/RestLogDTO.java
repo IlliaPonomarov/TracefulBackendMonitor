@@ -1,11 +1,9 @@
 package com.tracer.logger.rest.dtos;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
-import java.util.List;
 
-public class TBMRestLogDTO {
+public class RestLogDTO {
 
     private String id;
 
@@ -14,28 +12,28 @@ public class TBMRestLogDTO {
     private RequestDTO request;
 
     private ResponseDTO response;
-    private Date dateInit;
+    private String dateInit;
 
-    public TBMRestLogDTO() {
+    public RestLogDTO() {
     }
 
-    public TBMRestLogDTO(String id, RequestDTO requestDTO, ResponseDTO responseDTO, String service) {
+    public RestLogDTO(String id, RequestDTO requestDTO, ResponseDTO responseDTO, String service) {
         this.request = requestDTO;
         this.response = responseDTO;
         this.service = service;
         this.id = id;
-        this.dateInit = new Date();
+        this.dateInit = new Date().toString();
     }
 
     public String getId() {
         return id;
     }
 
-    public Date getDateInit() {
+    public String getDateInit() {
         return dateInit;
     }
 
-    public void setDateInit(Date dateInit) {
+    public void setDateInit(String dateInit) {
         this.dateInit = dateInit;
     }
 
@@ -67,7 +65,7 @@ public class TBMRestLogDTO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TBMRestLogDTO that)) return false;
+        if (!(o instanceof RestLogDTO that)) return false;
         return Objects.equals(id, that.id) && Objects.equals(service, that.service) && Objects.equals(request, that.request) && Objects.equals(response, that.response) && Objects.equals(dateInit, that.dateInit);
     }
 

@@ -1,6 +1,6 @@
 package com.tracer.logger.rest.services;
 
-import com.tracer.logger.rest.dtos.TBMRestLogDTO;
+import com.tracer.logger.rest.dtos.RestLogDTO;
 import com.tracer.logger.rest.exceptions.DateException;
 import com.tracer.logger.rest.exceptions.ServiceDoesNotExistException;
 import com.tracer.logger.rest.mappers.TBMRestLogMapper;
@@ -26,11 +26,11 @@ public class RestService {
     }
 
 
-    public RestLog log(TBMRestLogDTO tbmRestLogDTO) {
+    public RestLog log(RestLogDTO restLogDTO) {
         RestLog newRestLog = null;
 
         try {
-            newRestLog = TBMRestLogMapper.convertToEntity(tbmRestLogDTO);
+            newRestLog = TBMRestLogMapper.convertToEntity(restLogDTO);
         }
         catch (Exception e) {
             throw new MappingException(e.getMessage());

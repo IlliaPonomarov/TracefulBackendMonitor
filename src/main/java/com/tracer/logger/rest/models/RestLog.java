@@ -11,7 +11,7 @@ public class RestLog {
 
     @Id
     private String id;
-    private Date dateInit;
+    private String dateInit;
     private String service;
     private Request request;
     private Response response;
@@ -19,7 +19,7 @@ public class RestLog {
 
 
     public RestLog(String id, Request request, Response response, String service) {
-        this.dateInit = new Date();
+        this.dateInit = new Date().toString();
         this.request = request;
         this.response = response;
         this.service = service;
@@ -31,11 +31,11 @@ public class RestLog {
         return id;
     }
 
-    public Date getDateInit() {
+    public String getDateInit() {
         return dateInit;
     }
 
-    public void setDateInit(Date dateInit) {
+    public void setDateInit(String dateInit) {
         this.dateInit = dateInit;
     }
 

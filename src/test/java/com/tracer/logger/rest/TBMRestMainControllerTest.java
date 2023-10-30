@@ -5,12 +5,12 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.tracer.logger.jsonParsers.JSONRestLogParser;
-import com.tracer.logger.rest.exceptions.TBMRestLogNotFounded;
-import com.tracer.logger.rest.models.Request;
-import com.tracer.logger.rest.models.Response;
+import com.tracer.logger.rest.dtos.RestLogDTO;
+import com.tracer.logger.rest.mappers.TBMRestLogMapper;
 import com.tracer.logger.rest.models.RestLog;
 import com.tracer.logger.rest.services.RestService;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,14 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @SpringBootTest
@@ -66,5 +62,19 @@ public class TBMRestMainControllerTest {
         this.mockMvc.perform(get("/api/v1/rest/1"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void findByUUIDShouldReturnRestLogDTOByUUID() throws Exception {
+        RestLog restLog = this.restLogs.get(0);
+        RestLogDTO restLogDTO = TBMRestLogMapper.convertToDTO(restLog);
+        String uuid = restLog.getId();
+
+        when(restService.findById(uuid)).thenReturn(Optional.of(restLog));
+
+        this.mockMvc.perform(get("/api/v1/rest/" + uuid))
+                .andDo(print())
+                .andExpect(status().isFound())
+                .andExpect(content().json(JSONRestLogParser.stringify(restLogDTO)));
     }
 }

@@ -15,7 +15,7 @@ public class ResponseMapper {
                 response.getHeaders(),
                 response.getBody(),
                 response.getError(),
-                response.getDate()
+                response.getDate().toString()
         );
     }
 

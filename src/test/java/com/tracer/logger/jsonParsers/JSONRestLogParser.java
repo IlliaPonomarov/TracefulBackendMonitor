@@ -1,8 +1,7 @@
 package com.tracer.logger.jsonParsers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tracer.logger.rest.dtos.TBMRestLogDTO;
+import com.tracer.logger.rest.dtos.RestLogDTO;
 import com.tracer.logger.rest.models.Request;
 import com.tracer.logger.rest.models.Response;
 import com.tracer.logger.rest.models.RestLog;
@@ -13,9 +12,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class JSONRestLogParser {
@@ -51,6 +50,7 @@ public class JSONRestLogParser {
                         responseJSON.getString("error")
                 );
                 RestLog tbmRestLogDTO = new RestLog(id, request, response, service);
+                tbmRestLogDTO.setDateInit(new Date().toString());
                 restLogs.add(tbmRestLogDTO);
             }
 
@@ -62,6 +62,17 @@ public class JSONRestLogParser {
         }
 
         return restLogs;
+    }
+
+    public static String stringify(RestLogDTO restLogDTO) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = objectMapper.writeValueAsString(restLogDTO);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
 

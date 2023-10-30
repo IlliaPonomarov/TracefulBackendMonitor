@@ -12,12 +12,12 @@ public class ResponseDTO  {
     private String headers;
     private String body;
     private String error;
-    private Date dateEnd;
+    private String dateEnd;
 
     public ResponseDTO() {
     }
 
-    public ResponseDTO(String statusCode, String headers, String body, String error, Date dateEnd) {
+    public ResponseDTO(String statusCode, String headers, String body, String error, String dateEnd) {
         this.statusCode = statusCode;
         this.headers = headers;
         this.body = body;
@@ -33,11 +33,11 @@ public class ResponseDTO  {
         this.statusCode = statusCode;
     }
 
-    public Date getDateEnd() {
+    public String getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(Date dateEnd) {
+    public void setDateEnd(String dateEnd) {
         this.dateEnd = dateEnd;
     }
 

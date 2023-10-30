@@ -1,6 +1,6 @@
 package com.tracer.logger.rest.controllers;
 
-import com.tracer.logger.rest.dtos.TBMRestLogDTO;
+import com.tracer.logger.rest.dtos.RestLogDTO;
 import com.tracer.logger.rest.exceptions.DateException;
 import com.tracer.logger.rest.exceptions.ServiceNotFoundException;
 import com.tracer.logger.rest.exceptions.TBMRestLogNotFounded;
@@ -38,13 +38,13 @@ public class TBMRestDateController {
     @Parameter(in = ParameterIn.PATH, name = "end", required = true, description = "End date")
     @Parameter(in = ParameterIn.QUERY, name = "service", required = true, description = "Service name")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Log found" , content = @Content(schema = @Schema(implementation = TBMRestLogDTO.class))),
+            @ApiResponse(responseCode = "201", description = "Log found" , content = @Content(schema = @Schema(implementation = RestLogDTO.class))),
             @ApiResponse(responseCode = "404", description = "Log not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/{start}/{end}")
     @ResponseStatus(HttpStatus.FOUND)
-    public List<TBMRestLogDTO> findByBetweenDateAndService(@PathVariable String start, @PathVariable String end, @RequestParam String service) {
+    public List<RestLogDTO> findByBetweenDateAndService(@PathVariable String start, @PathVariable String end, @RequestParam String service) {
 
         List<RestLog> RestLog = null;
         Optional<List<RestLog>> tbmRestLog = restService.findByService(service);
@@ -69,13 +69,13 @@ public class TBMRestDateController {
     @Parameter(in = ParameterIn.PATH, name = "start", required = true, description = "Start date")
     @Parameter(in = ParameterIn.QUERY, name = "service", required = true, description = "Service name")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Log found" , content = @Content(schema = @Schema(implementation = TBMRestLogDTO.class))),
+            @ApiResponse(responseCode = "201", description = "Log found" , content = @Content(schema = @Schema(implementation = RestLogDTO.class))),
             @ApiResponse(responseCode = "404", description = "Log not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/{start}/start")
     @ResponseStatus(HttpStatus.FOUND)
-    public List<TBMRestLogDTO> findByDateAndService(@PathVariable String start, @RequestParam String service) {
+    public List<RestLogDTO> findByDateAndService(@PathVariable String start, @RequestParam String service) {
 
         List<RestLog> restLogs = null;
         Optional<List<RestLog>> tbmRestLog = restService.findByService(service);
@@ -99,13 +99,13 @@ public class TBMRestDateController {
     @Parameter(in = ParameterIn.PATH, name = "end", required = true, description = "End date")
     @Parameter(in = ParameterIn.QUERY, name = "service", required = true, description = "Service name")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Log found" , content = @Content(schema = @Schema(implementation = TBMRestLogDTO.class))),
+            @ApiResponse(responseCode = "201", description = "Log found" , content = @Content(schema = @Schema(implementation = RestLogDTO.class))),
             @ApiResponse(responseCode = "404", description = "Log not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/{end}/end")
     @ResponseStatus(HttpStatus.FOUND)
-    public List<TBMRestLogDTO> findByEndDateAndService(@PathVariable String end, @RequestParam String service) {
+    public List<RestLogDTO> findByEndDateAndService(@PathVariable String end, @RequestParam String service) {
 
         List<RestLog> restLogs = null;
         Optional<List<RestLog>> tbmRestLog = restService.findByService(service);

@@ -9,13 +9,13 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class RequestDTO {
-    private HttpMethod method;
+    private String method;
     private String url;
     private String body;
     private String headers;
-    private Date dateInit;
+    private String dateInit;
 
-    public RequestDTO(HttpMethod method, String url, String body, String headers, Date dateInit) {
+    public RequestDTO(String method, String url, String body, String headers, String dateInit) {
         this.method = method;
         this.url = url;
         this.body = body;
@@ -23,7 +23,7 @@ public class RequestDTO {
         this.dateInit = dateInit;
     }
 
-    public HttpMethod getMethod() {
+    public String getMethod() {
         return method;
     }
 
@@ -35,7 +35,7 @@ public class RequestDTO {
         this.headers = headers;
     }
 
-    public void setMethod(HttpMethod method) {
+    public void setMethod(String method) {
         this.method = method;
     }
 
@@ -47,11 +47,11 @@ public class RequestDTO {
         this.url = url;
     }
 
-    public Date getDateInit() {
+    public String getDateInit() {
         return dateInit;
     }
 
-    public void setDateInit(Date dateInit) {
+    public void setDateInit(String dateInit) {
         this.dateInit = dateInit;
     }
 
