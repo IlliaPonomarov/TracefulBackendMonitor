@@ -10,7 +10,7 @@ springdoc:
 spring:
   data:
     mongodb:
-      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:51328/tbm}
+      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:27017/tbm}
       database: tbm
       auto-index-creation: true
       authentication-database: admin

@@ -5,10 +5,9 @@ import com.tracer.logger.rest.dtos.TBMRestLogDTO;
 import com.tracer.logger.rest.exceptions.ServiceNotFoundException;
 import com.tracer.logger.rest.exceptions.TBMRestLogBadRequest;
 import com.tracer.logger.rest.exceptions.TBMRestLogNotFounded;
-import com.tracer.logger.rest.exceptions.UUIDInvalidException;
 import com.tracer.logger.rest.mappers.TBMRestLogMapper;
 import com.tracer.logger.rest.models.TBMRestLog;
-import com.tracer.logger.rest.services.TBMRestService;
+import com.tracer.logger.rest.services.RestService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -25,18 +24,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/rest")
 public class TBMRestMainController {
-
-    private final TBMRestService tbmRestService;
-
+    private final RestService restService;
 
     @Autowired
-    public TBMRestMainController(TBMRestService tbmRestService) {
-        this.tbmRestService = tbmRestService;
+    public TBMRestMainController(RestService restService) {
+        this.restService = restService;
     }
 
     @Operation(summary = "Log a request and response", tags = {"Rest Log Service"})
@@ -62,7 +58,7 @@ public class TBMRestMainController {
 
             throw new TBMRestLogBadRequest(errorMessage.toString());
         }
-        tbmRestLog = tbmRestService.log(tbmLogDTO);
+        tbmRestLog = restService.log(tbmLogDTO);
         tbmRestLogDTO = TBMRestLogMapper.convertToDTO(tbmRestLog);
 
         return tbmRestLogDTO;
@@ -78,11 +74,10 @@ public class TBMRestMainController {
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public List<TBMRestLogDTO> findAll() {
-        List<TBMRestLog> TBMRestLogs = new ArrayList<>(tbmRestService.findAll());
+        List<TBMRestLog> TBMRestLogs = new ArrayList<>(restService.findAll());
 
-        if (TBMRestLogs.isEmpty()) {
+        if (TBMRestLogs.isEmpty())
             throw new TBMRestLogNotFounded("No logs found");
-        }
 
         return TBMRestLogs.stream( ).map(TBMRestLogMapper::convertToDTO).toList();
     }
@@ -98,7 +93,7 @@ public class TBMRestMainController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
     public TBMRestLogDTO findByUUID(@PathVariable String id) {
-        Optional<TBMRestLog> tblRestLog = tbmRestService.findById(id);
+        Optional<TBMRestLog> tblRestLog = restService.findById(id);
 
         if (tblRestLog.isEmpty())
             throw new TBMRestLogNotFounded("Log not found");
@@ -118,12 +113,12 @@ public class TBMRestMainController {
     @DeleteMapping("/service/{service}")
     @ResponseStatus(HttpStatus.OK)
     public TBMRestLog deleteByService(@PathVariable String service) {
-        Optional<List<TBMRestLog>> tblRestLog = tbmRestService.findByService(service);
+        Optional<List<TBMRestLog>> tblRestLog = restService.findByService(service);
 
         if (tblRestLog.isEmpty())
             throw new ServiceNotFoundException(String.format("Service %s not found", service));
 
-        return tbmRestService.deleteByService(service);
+        return restService.deleteByService(service);
     }
 
     @Operation(summary = "Delete all logs", tags = {"Rest Log Service"})
@@ -136,7 +131,7 @@ public class TBMRestMainController {
     @DeleteMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public String deleteAll() {
-        tbmRestService.deleteAll();
+        restService.deleteAll();
 
         return "All logs deleted";
     }

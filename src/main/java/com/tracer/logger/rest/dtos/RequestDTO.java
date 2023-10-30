@@ -8,12 +8,11 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
-public class RequestDTO  {
+public class RequestDTO {
     private HttpMethod method;
     private String url;
     private String body;
     private String headers;
-
     private Date dateInit;
 
     public RequestDTO(HttpMethod method, String url, String body, String headers, Date dateInit) {

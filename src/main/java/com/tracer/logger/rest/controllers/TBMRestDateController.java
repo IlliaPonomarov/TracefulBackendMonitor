@@ -6,7 +6,7 @@ import com.tracer.logger.rest.exceptions.ServiceNotFoundException;
 import com.tracer.logger.rest.exceptions.TBMRestLogNotFounded;
 import com.tracer.logger.rest.mappers.TBMRestLogMapper;
 import com.tracer.logger.rest.models.TBMRestLog;
-import com.tracer.logger.rest.services.TBMRestService;
+import com.tracer.logger.rest.services.RestService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -25,11 +25,11 @@ import java.util.Optional;
 @RequestMapping("/api/v1/rest/date")
 public class TBMRestDateController {
 
-    private final TBMRestService tbmRestService;
+    private final RestService restService;
 
     @Autowired
-    public TBMRestDateController(TBMRestService tbmRestService) {
-        this.tbmRestService = tbmRestService;
+    public TBMRestDateController(RestService restService) {
+        this.restService = restService;
     }
 
 
@@ -47,16 +47,17 @@ public class TBMRestDateController {
     public List<TBMRestLogDTO> findByBetweenDateAndService(@PathVariable String start, @PathVariable String end, @RequestParam String service) {
 
         List<TBMRestLog> TBMRestLog = null;
-        Optional<List<TBMRestLog>> tbmRestLog = tbmRestService.findByService(service);
+        Optional<List<TBMRestLog>> tbmRestLog = restService.findByService(service);
 
         if (tbmRestLog.isEmpty())
             throw new ServiceNotFoundException(String.format("Service %s not found", service));
 
         try {
-            TBMRestLog = tbmRestService.findByBetweenDateAndService(start, end, service);
+            TBMRestLog = restService.findByBetweenDateAndService(start, end, service);
         } catch (DateException e) {
             throw new DateException(e.getMessage());
         }
+
         if (TBMRestLog.isEmpty()) {
             throw new TBMRestLogNotFounded("Log not found");
         }
@@ -77,13 +78,13 @@ public class TBMRestDateController {
     public List<TBMRestLogDTO> findByDateAndService(@PathVariable String start, @RequestParam String service) {
 
         List<TBMRestLog> tbmRestLogs = null;
-        Optional<List<TBMRestLog>> tbmRestLog = tbmRestService.findByService(service);
+        Optional<List<TBMRestLog>> tbmRestLog = restService.findByService(service);
 
         if (tbmRestLog.isEmpty())
             throw new ServiceNotFoundException(String.format("Service %s not found", service));
 
         try {
-            tbmRestLogs = tbmRestService.findByStartDateAndService(start, service);
+            tbmRestLogs = restService.findByStartDateAndService(start, service);
         } catch (DateException e) {
             throw new DateException(e.getMessage());
         }
@@ -107,13 +108,13 @@ public class TBMRestDateController {
     public List<TBMRestLogDTO> findByEndDateAndService(@PathVariable String end, @RequestParam String service) {
 
         List<TBMRestLog> tbmRestLogs = null;
-        Optional<List<TBMRestLog>> tbmRestLog = tbmRestService.findByService(service);
+        Optional<List<TBMRestLog>> tbmRestLog = restService.findByService(service);
 
         if (tbmRestLog.isEmpty())
             throw new ServiceNotFoundException(String.format("Service %s not found", service));
 
         try {
-            tbmRestLogs = tbmRestService.findByEndDateAndService(end, service);
+            tbmRestLogs = restService.findByEndDateAndService(end, service);
         } catch (DateException e) {
             throw new DateException(e.getMessage());
         }

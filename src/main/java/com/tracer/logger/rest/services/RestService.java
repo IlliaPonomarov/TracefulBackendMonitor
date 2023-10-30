@@ -14,13 +14,13 @@ import java.time.DateTimeException;
 import java.util.*;
 
 @Service
-public class TBMRestService {
+public class RestService {
 
     private final TBMRestRepo tbmRestRepo;
     private final DateService dateService;
 
     @Autowired  
-    public TBMRestService(TBMRestRepo tbmRestRepo, DateService dateService) {
+    public RestService(TBMRestRepo tbmRestRepo, DateService dateService) {
         this.tbmRestRepo = tbmRestRepo;
         this.dateService = dateService;
     }
