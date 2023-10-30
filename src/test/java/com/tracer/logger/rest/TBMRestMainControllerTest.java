@@ -1,5 +1,6 @@
 package com.tracer.logger.rest;
 
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -7,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.tracer.logger.jsonParsers.JSONRestLogParser;
+import com.tracer.logger.rest.exceptions.TBMRestLogNotFounded;
 import com.tracer.logger.rest.models.Request;
 import com.tracer.logger.rest.models.Response;
 import com.tracer.logger.rest.models.RestLog;
@@ -21,6 +23,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Date;
 import java.util.List;
@@ -55,5 +58,13 @@ public class TBMRestMainControllerTest {
         this.mockMvc.perform(get("/api/v1/rest/"))
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenLogNotFounded() throws Exception {
+        when(restService.findAll()).thenReturn(List.of());
+        this.mockMvc.perform(get("/api/v1/rest/1"))
+                .andDo(print())
+                .andExpect(status().isNotFound());
     }
 }
