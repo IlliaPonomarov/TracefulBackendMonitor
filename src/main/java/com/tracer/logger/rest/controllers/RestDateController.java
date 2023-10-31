@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,25 +46,25 @@ public class RestDateController {
     })
     @GetMapping("/{start}/{end}")
     @ResponseStatus(HttpStatus.FOUND)
-    public List<RestLogDTO> findByBetweenDateAndService(@PathVariable String start, @PathVariable String end, @RequestParam String service) {
+    public List<RestLogDTO> findByBetweenDateAndService(@PathVariable String start, @PathVariable String end, @RequestParam("service") String service) {
 
-        List<RestLog> RestLog = null;
+        List<RestLog> restLog = Collections.emptyList();
         Optional<List<RestLog>> tbmRestLog = restService.findByService(service);
 
         if (tbmRestLog.isEmpty())
             throw new ServiceNotFoundException(String.format("Service %s not found", service));
 
         try {
-            RestLog = restService.findByBetweenDateAndService(start, end, service);
+            restLog = restService.findByBetweenDateAndService(start, end, service);
         } catch (DateException e) {
             throw new DateException(e.getMessage());
         }
 
-        if (RestLog.isEmpty()) {
+        if (restLog.isEmpty()) {
             throw new RestLogNotFounded("Log not found");
         }
 
-        return RestLog.stream( ).map(RestLogMapper::convertToDTO).toList();
+        return restLog.stream().map(RestLogMapper::convertToDTO).toList();
     }
 
     @Operation(summary = "Find a log by start date", tags = {"Rest Log Date Service"})
@@ -75,9 +77,9 @@ public class RestDateController {
     })
     @GetMapping("/{start}/start")
     @ResponseStatus(HttpStatus.FOUND)
-    public List<RestLogDTO> findByDateAndService(@PathVariable String start, @RequestParam String service) {
+    public List<RestLogDTO> findByStartDateAndService(@PathVariable String start, @RequestParam String service) {
 
-        List<RestLog> restLogs = null;
+        List<RestLog> restLogs = Collections.emptyList();
         Optional<List<RestLog>> tbmRestLog = restService.findByService(service);
 
         if (tbmRestLog.isEmpty())
@@ -89,7 +91,7 @@ public class RestDateController {
             throw new DateException(e.getMessage());
         }
         if (restLogs.isEmpty()) {
-            throw new RestLogNotFounded("Log not found");
+            throw new RestLogNotFounded(String.format("Logs not found by start date %s with service %s", start, service));
         }
 
         return restLogs.stream( ).map(RestLogMapper::convertToDTO).toList();
@@ -107,7 +109,7 @@ public class RestDateController {
     @ResponseStatus(HttpStatus.FOUND)
     public List<RestLogDTO> findByEndDateAndService(@PathVariable String end, @RequestParam String service) {
 
-        List<RestLog> restLogs = null;
+        List<RestLog> restLogs = Collections.emptyList();
         Optional<List<RestLog>> restLog = restService.findByService(service);
 
         if (restLog.isEmpty())
@@ -119,9 +121,9 @@ public class RestDateController {
             throw new DateException(e.getMessage());
         }
         if (restLogs.isEmpty()) {
-            throw new RestLogNotFounded("Log not found");
+            throw new RestLogNotFounded(String.format("Log not found between dates %s and %s", end, end));
         }
 
-        return restLogs.stream( ).map(RestLogMapper::convertToDTO).toList();
+        return restLogs.stream().map(RestLogMapper::convertToDTO).toList();
     }
 }

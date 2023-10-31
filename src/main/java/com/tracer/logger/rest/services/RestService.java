@@ -50,6 +50,7 @@ public class RestService {
 
         Date startDate = null;
         Date endDate = null;
+
         try {
             startDate = dateService.convertStringToDate(start);
             endDate = dateService.convertStringToDate(end);
