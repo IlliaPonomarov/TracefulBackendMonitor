@@ -18,6 +18,8 @@ public class RestLog {
 
 
 
+    public RestLog() {
+    }
     public RestLog(String id, Request request, Response response, String service) {
         this.dateInit = new Date().toString();
         this.request = request;

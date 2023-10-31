@@ -49,7 +49,7 @@ public class TBMRestMainController {
     @ResponseStatus(HttpStatus.CREATED)
     public RestLogDTO log(@RequestBody @Valid RestLogDTO restLogDTO, BindingResult bindingResult) {
 
-        RestLog createdRestLog = null;
+        RestLog createdRestLog = new RestLog();
 
         if (bindingResult.hasErrors()) {
 
