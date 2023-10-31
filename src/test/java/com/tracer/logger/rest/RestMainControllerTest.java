@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.tracer.logger.jsonParsers.JSONRestLogParser;
 import com.tracer.logger.rest.dtos.RestLogDTO;
-import com.tracer.logger.rest.mappers.TBMRestLogMapper;
+import com.tracer.logger.rest.mappers.RestLogMapper;
 import com.tracer.logger.rest.models.RestLog;
 import com.tracer.logger.rest.services.RestService;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +26,7 @@ import java.util.Optional;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TBMRestMainControllerTest {
+public class RestMainControllerTest {
 
 
     @Autowired
@@ -50,7 +50,7 @@ public class TBMRestMainControllerTest {
     @Test
     public void logShouldReturnCreated() throws Exception {
         RestLog restLog = this.restLogs.get(0);
-        RestLogDTO restLogDTO = TBMRestLogMapper.convertToDTO(restLog);
+        RestLogDTO restLogDTO = RestLogMapper.convertToDTO(restLog);
 
         when(restService.log(restLogDTO)).thenReturn(restLog);
 
@@ -66,7 +66,7 @@ public class TBMRestMainControllerTest {
     public void logShouldReturnBadRequest() throws Exception {
         RestLog restLog = this.restLogs.get(0);
 
-        RestLogDTO restLogDTO = TBMRestLogMapper.convertToDTO(restLog);
+        RestLogDTO restLogDTO = RestLogMapper.convertToDTO(restLog);
         restLogDTO.setService(null);
 
         when(restService.log(restLogDTO)).thenReturn(restLog);
@@ -97,7 +97,7 @@ public class TBMRestMainControllerTest {
     @Test
     public void findByUUIDShouldReturnRestLogDTO() throws Exception {
         RestLog restLog = this.restLogs.get(0);
-        RestLogDTO restLogDTO = TBMRestLogMapper.convertToDTO(restLog);
+        RestLogDTO restLogDTO = RestLogMapper.convertToDTO(restLog);
         String uuid = restLog.getId();
 
         when(restService.findById(uuid)).thenReturn(Optional.of(restLog));
@@ -138,7 +138,7 @@ public class TBMRestMainControllerTest {
         when(restService.findByService(service)).thenReturn(Optional.of(filteredByService));
         when(restService.deleteByService(filteredByService)).thenReturn(filteredByService);
 
-        List<RestLogDTO> restLogDTOList = filteredByService.stream().map(TBMRestLogMapper::convertToDTO).toList();
+        List<RestLogDTO> restLogDTOList = filteredByService.stream().map(RestLogMapper::convertToDTO).toList();
         String json = JSONRestLogParser.stringify(restLogDTOList);
 
         this.mockMvc.perform(delete("/api/v1/rest/service/" + service))

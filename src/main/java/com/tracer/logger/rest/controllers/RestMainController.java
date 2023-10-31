@@ -4,8 +4,8 @@ package com.tracer.logger.rest.controllers;
 import com.tracer.logger.rest.dtos.RestLogDTO;
 import com.tracer.logger.rest.exceptions.ServiceNotFoundException;
 import com.tracer.logger.rest.exceptions.TBMRestLogBadRequest;
-import com.tracer.logger.rest.exceptions.TBMRestLogNotFounded;
-import com.tracer.logger.rest.mappers.TBMRestLogMapper;
+import com.tracer.logger.rest.exceptions.RestLogNotFounded;
+import com.tracer.logger.rest.mappers.RestLogMapper;
 import com.tracer.logger.rest.models.RestLog;
 import com.tracer.logger.rest.services.RestService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,11 +30,11 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api/v1/rest")
-public class TBMRestMainController {
+public class RestMainController {
     private final RestService restService;
 
     @Autowired
-    public TBMRestMainController(RestService restService) {
+    public RestMainController(RestService restService) {
         this.restService = restService;
     }
 
@@ -62,7 +62,7 @@ public class TBMRestMainController {
         }
         createdRestLog = restService.log(restLogDTO);
 
-        return TBMRestLogMapper.convertToDTO(createdRestLog);
+        return RestLogMapper.convertToDTO(createdRestLog);
     }
 
     @Operation(summary = "Find all logs", tags = {"Rest Log Service"})
@@ -78,9 +78,9 @@ public class TBMRestMainController {
         List<RestLog> RestLogs = new ArrayList<>(restService.findAll());
 
         if (RestLogs.isEmpty())
-            throw new TBMRestLogNotFounded("No logs found");
+            throw new RestLogNotFounded("No logs found");
 
-        return RestLogs.stream( ).map(TBMRestLogMapper::convertToDTO).toList();
+        return RestLogs.stream( ).map(RestLogMapper::convertToDTO).toList();
     }
 
 
@@ -97,9 +97,9 @@ public class TBMRestMainController {
         Optional<RestLog> tblRestLog = restService.findById(id);
 
         if (tblRestLog.isEmpty())
-            throw new TBMRestLogNotFounded("Log not found");
+            throw new RestLogNotFounded("Log not found");
 
-        return TBMRestLogMapper.convertToDTO(tblRestLog.get());
+        return RestLogMapper.convertToDTO(tblRestLog.get());
     }
 
 
@@ -122,7 +122,7 @@ public class TBMRestMainController {
         return restService
                 .deleteByService(filteredRestLogsByService.get())
                 .stream()
-                        .map(TBMRestLogMapper::convertToDTO).collect(toList());
+                        .map(RestLogMapper::convertToDTO).collect(toList());
     }
 
     @Operation(summary = "Delete all logs", tags = {"Rest Log Service"})

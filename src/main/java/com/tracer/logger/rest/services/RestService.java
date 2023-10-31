@@ -3,9 +3,9 @@ package com.tracer.logger.rest.services;
 import com.tracer.logger.rest.dtos.RestLogDTO;
 import com.tracer.logger.rest.exceptions.DateException;
 import com.tracer.logger.rest.exceptions.ServiceDoesNotExistException;
-import com.tracer.logger.rest.mappers.TBMRestLogMapper;
+import com.tracer.logger.rest.mappers.RestLogMapper;
 import com.tracer.logger.rest.models.RestLog;
-import com.tracer.logger.rest.repos.TBMRestRepo;
+import com.tracer.logger.rest.repos.RestRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mapping.MappingException;
 import org.springframework.stereotype.Service;
@@ -16,12 +16,12 @@ import java.util.*;
 @Service
 public class RestService {
 
-    private final TBMRestRepo tbmRestRepo;
+    private final RestRepo restRepo;
     private final DateService dateService;
 
     @Autowired  
-    public RestService(TBMRestRepo tbmRestRepo, DateService dateService) {
-        this.tbmRestRepo = tbmRestRepo;
+    public RestService(RestRepo restRepo, DateService dateService) {
+        this.restRepo = restRepo;
         this.dateService = dateService;
     }
 
@@ -30,20 +30,20 @@ public class RestService {
         RestLog newRestLog = null;
 
         try {
-            newRestLog = TBMRestLogMapper.convertToEntity(restLogDTO);
+            newRestLog = RestLogMapper.convertToEntity(restLogDTO);
         }
         catch (Exception e) {
             throw new MappingException(e.getMessage());
         }
-        return tbmRestRepo.save(newRestLog);
+        return restRepo.save(newRestLog);
     }
 
     public List<RestLog> findAll() {
-        return tbmRestRepo.findAll();
+        return restRepo.findAll();
     }
 
     public Optional<RestLog> findById(String uuid) {
-        return tbmRestRepo.findById(uuid);
+        return restRepo.findById(uuid);
     }
 
     public List<RestLog> findByBetweenDateAndService(String start, String end, String service) {
@@ -57,37 +57,37 @@ public class RestService {
             throw new DateException(e.getMessage());
         }
 
-        return tbmRestRepo.findByDateInitBetweenAndService(startDate, endDate, service);
+        return restRepo.findByDateInitBetweenAndService(startDate, endDate, service);
     }
 
     public Optional<List<RestLog>> findByService(String service) {
-        return tbmRestRepo.findByService(service);
+        return restRepo.findByService(service);
     }
 
     public RestLog deleteByService(String service) {
-        return tbmRestRepo.deleteByService(service);
+        return restRepo.deleteByService(service);
     }
 
     public List<RestLog> deleteByService(List<RestLog> restLogs) {
          restLogs.forEach(
-                restLog -> tbmRestRepo.deleteByService(restLog.getService())
+                restLog -> restRepo.deleteByService(restLog.getService())
         );
 
          return restLogs;
     }
 
     public void deleteById(String id) {
-        Optional<RestLog> tbmRestLogOptional = tbmRestRepo.findById(id);
+        Optional<RestLog> tbmRestLogOptional = restRepo.findById(id);
 
         if (tbmRestLogOptional.isEmpty()) {
             throw new ServiceDoesNotExistException("Service with id: " + id + " does not exist");
         }
 
-        tbmRestRepo.deleteById(id);
+        restRepo.deleteById(id);
     }
 
     public void deleteAll() {
-        tbmRestRepo.deleteAll();
+        restRepo.deleteAll();
     }
 
     public List<RestLog> findByStartDateAndService(String start, String service) {
@@ -98,7 +98,7 @@ public class RestService {
             throw new DateException(e.getMessage());
         }
 
-        return tbmRestRepo.findByDateInitAfterAndService(startDate, service);
+        return restRepo.findByDateInitAfterAndService(startDate, service);
     }
 
     public List<RestLog> findByEndDateAndService(String end, String service) {
@@ -109,6 +109,6 @@ public class RestService {
             throw new DateException(e.getMessage());
         }
 
-        return tbmRestRepo.findByDateInitBeforeAndService(endDate, service);
+        return restRepo.findByDateInitBeforeAndService(endDate, service);
     }
 }

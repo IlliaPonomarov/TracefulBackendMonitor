@@ -3,8 +3,8 @@ package com.tracer.logger.rest.controllers;
 import com.tracer.logger.rest.dtos.RestLogDTO;
 import com.tracer.logger.rest.exceptions.DateException;
 import com.tracer.logger.rest.exceptions.ServiceNotFoundException;
-import com.tracer.logger.rest.exceptions.TBMRestLogNotFounded;
-import com.tracer.logger.rest.mappers.TBMRestLogMapper;
+import com.tracer.logger.rest.exceptions.RestLogNotFounded;
+import com.tracer.logger.rest.mappers.RestLogMapper;
 import com.tracer.logger.rest.models.RestLog;
 import com.tracer.logger.rest.services.RestService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,12 +23,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/rest/date")
-public class TBMRestDateController {
+public class RestDateController {
 
     private final RestService restService;
 
     @Autowired
-    public TBMRestDateController(RestService restService) {
+    public RestDateController(RestService restService) {
         this.restService = restService;
     }
 
@@ -59,10 +59,10 @@ public class TBMRestDateController {
         }
 
         if (RestLog.isEmpty()) {
-            throw new TBMRestLogNotFounded("Log not found");
+            throw new RestLogNotFounded("Log not found");
         }
 
-        return RestLog.stream( ).map(TBMRestLogMapper::convertToDTO).toList();
+        return RestLog.stream( ).map(RestLogMapper::convertToDTO).toList();
     }
 
     @Operation(summary = "Find a log by start date", tags = {"Rest Log Date Service"})
@@ -89,10 +89,10 @@ public class TBMRestDateController {
             throw new DateException(e.getMessage());
         }
         if (restLogs.isEmpty()) {
-            throw new TBMRestLogNotFounded("Log not found");
+            throw new RestLogNotFounded("Log not found");
         }
 
-        return restLogs.stream( ).map(TBMRestLogMapper::convertToDTO).toList();
+        return restLogs.stream( ).map(RestLogMapper::convertToDTO).toList();
     }
 
     @Operation(summary = "Find a log by end date", tags = {"Rest Log Date Service"})
@@ -108,9 +108,9 @@ public class TBMRestDateController {
     public List<RestLogDTO> findByEndDateAndService(@PathVariable String end, @RequestParam String service) {
 
         List<RestLog> restLogs = null;
-        Optional<List<RestLog>> tbmRestLog = restService.findByService(service);
+        Optional<List<RestLog>> restLog = restService.findByService(service);
 
-        if (tbmRestLog.isEmpty())
+        if (restLog.isEmpty())
             throw new ServiceNotFoundException(String.format("Service %s not found", service));
 
         try {
@@ -119,9 +119,9 @@ public class TBMRestDateController {
             throw new DateException(e.getMessage());
         }
         if (restLogs.isEmpty()) {
-            throw new TBMRestLogNotFounded("Log not found");
+            throw new RestLogNotFounded("Log not found");
         }
 
-        return restLogs.stream( ).map(TBMRestLogMapper::convertToDTO).toList();
+        return restLogs.stream( ).map(RestLogMapper::convertToDTO).toList();
     }
 }

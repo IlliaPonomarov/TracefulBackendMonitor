@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @ComponentScan(basePackages = "com.tracer.logger.rest.controllers")
 public class TBMRestMainExceptionController {
 
-    @ExceptionHandler(value = {TBMRestLogNotFounded.class})
+    @ExceptionHandler(value = {RestLogNotFounded.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public ErrorMessage logNotFound(TBMRestLogNotFounded ex) {
+    public ErrorMessage logNotFound(RestLogNotFounded ex) {
         String errorMessage = ex.getMessage();
         int statusCode = HttpStatus.NOT_FOUND.value();
 

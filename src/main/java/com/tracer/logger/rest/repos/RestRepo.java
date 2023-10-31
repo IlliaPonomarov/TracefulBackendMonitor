@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface TBMRestRepo extends MongoRepository<RestLog, UUID> {
+public interface RestRepo extends MongoRepository<RestLog, UUID> {
     Optional<RestLog> findById(String id);
     List<RestLog> findByDateInitBetweenAndService(Date dateInit, Date dateEnd, String service);
 

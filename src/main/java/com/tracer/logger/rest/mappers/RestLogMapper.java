@@ -7,7 +7,7 @@ import com.tracer.logger.rest.models.Request;
 import com.tracer.logger.rest.models.Response;
 import com.tracer.logger.rest.models.RestLog;
 
-public class TBMRestLogMapper {
+public class RestLogMapper {
 
     public static RestLog convertToEntity(RestLogDTO tblLogDTO) {
         Request request = RequestMapper.convertToEntity(tblLogDTO.getRequest());
