@@ -1,9 +1,5 @@
 package com.tracer.logger.rest.dtos;
 
-import org.springframework.http.HttpStatusCode;
-
-import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 public class ResponseDTO  {
@@ -12,17 +8,17 @@ public class ResponseDTO  {
     private String headers;
     private String body;
     private String error;
-    private String dateEnd;
+    private String date;
 
     public ResponseDTO() {
     }
 
-    public ResponseDTO(String statusCode, String headers, String body, String error, String dateEnd) {
+    public ResponseDTO(String statusCode, String headers, String body, String error, String date) {
         this.statusCode = statusCode;
         this.headers = headers;
         this.body = body;
         this.error = error;
-        this.dateEnd = dateEnd;
+        this.date = date;
     }
 
     public String getStatusCode() {
@@ -33,12 +29,12 @@ public class ResponseDTO  {
         this.statusCode = statusCode;
     }
 
-    public String getDateEnd() {
-        return dateEnd;
+    public String getDate() {
+        return date;
     }
 
-    public void setDateEnd(String dateEnd) {
-        this.dateEnd = dateEnd;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getHeaders() {
@@ -69,12 +65,12 @@ public class ResponseDTO  {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ResponseDTO that)) return false;
-        return Objects.equals(statusCode, that.statusCode) && Objects.equals(headers, that.headers) && Objects.equals(body, that.body) && Objects.equals(error, that.error) && Objects.equals(dateEnd, that.dateEnd);
+        return Objects.equals(statusCode, that.statusCode) && Objects.equals(headers, that.headers) && Objects.equals(body, that.body) && Objects.equals(error, that.error) && Objects.equals(date, that.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(statusCode, headers, body, error, dateEnd);
+        return Objects.hash(statusCode, headers, body, error, date);
 
     }
 

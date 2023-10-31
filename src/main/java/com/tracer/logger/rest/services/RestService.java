@@ -68,6 +68,14 @@ public class RestService {
         return tbmRestRepo.deleteByService(service);
     }
 
+    public List<RestLog> deleteByService(List<RestLog> restLogs) {
+         restLogs.forEach(
+                restLog -> tbmRestRepo.deleteByService(restLog.getService())
+        );
+
+         return restLogs;
+    }
+
     public void deleteById(String id) {
         Optional<RestLog> tbmRestLogOptional = tbmRestRepo.findById(id);
 

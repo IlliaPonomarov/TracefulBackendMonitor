@@ -1,17 +1,24 @@
 package com.tracer.logger.rest.dtos;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.Date;
 import java.util.Objects;
 
 public class RestLogDTO {
 
+    @NotEmpty(message = "Id is mandatory")
     private String id;
 
+    @NotEmpty(message = "Service is mandatory")
     private String service;
+
 
     private RequestDTO request;
 
     private ResponseDTO response;
+
     private String dateInit;
 
     public RestLogDTO() {

@@ -75,5 +75,18 @@ public class JSONRestLogParser {
         return json;
     }
 
+    public static String stringify(List<RestLogDTO> restLogDTOS) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = objectMapper.writeValueAsString(restLogDTOS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+
+
 
 }

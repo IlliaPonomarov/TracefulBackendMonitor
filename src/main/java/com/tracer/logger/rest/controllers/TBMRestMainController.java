@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api/v1/rest")
@@ -44,10 +47,9 @@ public class TBMRestMainController {
     })
     @PostMapping("/log")
     @ResponseStatus(HttpStatus.CREATED)
-    public RestLogDTO log(@RequestBody RestLogDTO tbmLogDTO, BindingResult bindingResult) {
+    public RestLogDTO log(@RequestBody @Valid RestLogDTO restLogDTO, BindingResult bindingResult) {
 
-        RestLogDTO restLogDTO = null;
-        RestLog restLog = null;
+        RestLog createdRestLog = null;
 
         if (bindingResult.hasErrors()) {
 
@@ -58,10 +60,9 @@ public class TBMRestMainController {
 
             throw new TBMRestLogBadRequest(errorMessage.toString());
         }
-        restLog = restService.log(tbmLogDTO);
-        restLogDTO = TBMRestLogMapper.convertToDTO(restLog);
+        createdRestLog = restService.log(restLogDTO);
 
-        return restLogDTO;
+        return TBMRestLogMapper.convertToDTO(createdRestLog);
     }
 
     @Operation(summary = "Find all logs", tags = {"Rest Log Service"})
@@ -111,14 +112,17 @@ public class TBMRestMainController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @DeleteMapping("/service/{service}")
-    @ResponseStatus(HttpStatus.OK)
-    public RestLog deleteByService(@PathVariable String service) {
-        Optional<List<RestLog>> tblRestLog = restService.findByService(service);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public List<RestLogDTO> deleteByService(@PathVariable String service) {
+        Optional<List<RestLog>> filteredRestLogsByService = restService.findByService(service);
 
-        if (tblRestLog.isEmpty())
+        if (filteredRestLogsByService.isEmpty())
             throw new ServiceNotFoundException(String.format("Service %s not found", service));
 
-        return restService.deleteByService(service);
+        return restService
+                .deleteByService(filteredRestLogsByService.get())
+                .stream()
+                        .map(TBMRestLogMapper::convertToDTO).collect(toList());
     }
 
     @Operation(summary = "Delete all logs", tags = {"Rest Log Service"})
