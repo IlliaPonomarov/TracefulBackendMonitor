@@ -20,6 +20,5 @@ public class RestDateControllerTest {
     @MockBean
     private RestService restService;
 
-
     private List<RestLog> restLogs;
 }
