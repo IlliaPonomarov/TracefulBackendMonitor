@@ -33,12 +33,19 @@ public class RestDateControllerTest {
 
     @MockBean
     private RestService restService;
-
     private List<RestLog> restLogs;
+    private String service;
+    private String start;
+    private String end;
+    private List<RestLog> filteredRestLogs;
 
     @BeforeEach
     void setUp() {
         this.restLogs = JSONRestLogParser.parse("src/test/java/com/tracer/logger/assets/restLogs.json");
+        this.service = this.restLogs.get(0).getService();
+        this.start = this.restLogs.get(0).getDateInit();
+        this.end = this.restLogs.get(1).getDateInit();
+        this.filteredRestLogs = List.of(this.restLogs.get(0), this.restLogs.get(1));
     }
 
     /*
@@ -46,9 +53,7 @@ public class RestDateControllerTest {
      */
     @Test
     public void findByBetweenDateAndServiceShouldReturnListOfRestLogDTO() throws Exception {
-        String service = this.restLogs.get(0).getService();
-        String start = this.restLogs.get(0).getDateInit();
-        String end = this.restLogs.get(1).getDateInit();
+
 
         List<RestLog> restLogs = List.of(this.restLogs.get(0), this.restLogs.get(1));
         List<RestLogDTO> expected = restLogs.stream().map(RestLogMapper::convertToDTO).toList();
@@ -65,11 +70,6 @@ public class RestDateControllerTest {
 
     @Test
     public void findByBetweenDateAndServiceShouldReturnNotFoundService() throws Exception {
-        String service = this.restLogs.get(0).getService();
-        String start = this.restLogs.get(0).getDateInit();
-        String end = this.restLogs.get(1).getDateInit();
-
-        List<RestLog> restLogs = List.of(this.restLogs.get(0), this.restLogs.get(1));
 
         when(restService.findByService(service)).thenReturn(Optional.empty());
 
@@ -80,13 +80,10 @@ public class RestDateControllerTest {
 
     @Test
     public void findByBetweenDateAndServiceShouldReturnNotFoundServiceBetweenDates() throws Exception {
-        String service = this.restLogs.get(0).getService();
-        String start = this.restLogs.get(0).getDateInit();
-        String end = this.restLogs.get(1).getDateInit();
 
-        List<RestLog> restLogs = List.of(this.restLogs.get(0), this.restLogs.get(1));
 
-        when(restService.findByService(service)).thenReturn(Optional.of(restLogs));
+
+        when(restService.findByService(service)).thenReturn(Optional.of(filteredRestLogs));
         when(restService.findByBetweenDateAndService(start, end, service)).thenReturn(Collections.emptyList());
 
         this.mockMvc.perform(get(
@@ -99,13 +96,9 @@ public class RestDateControllerTest {
      */
     @Test
     public void findByStartDateAndServiceShouldReturnListOfRestLogsDTOS() throws Exception {
-        String service = this.restLogs.get(0).getService();
-        String start = this.restLogs.get(0).getDateInit();
-
-        List<RestLog> restLogs = List.of(this.restLogs.get(0), this.restLogs.get(1));
         List<RestLogDTO> expected = restLogs.stream().map(RestLogMapper::convertToDTO).toList();
 
-        when(restService.findByService(service)).thenReturn(Optional.of(restLogs));
+        when(restService.findByService(service)).thenReturn(Optional.of(filteredRestLogs));
         when(restService.findByStartDateAndService(start, service)).thenReturn(restLogs);
 
         this.mockMvc.perform(get(
@@ -117,8 +110,6 @@ public class RestDateControllerTest {
 
     @Test
     public void findByStartDateAndServiceShouldReturnNotFoundService() throws Exception {
-        String service = this.restLogs.get(0).getService();
-        String start = this.restLogs.get(0).getDateInit();
 
         when(restService.findByService(service)).thenReturn(Optional.empty());
 
@@ -130,12 +121,8 @@ public class RestDateControllerTest {
 
     @Test
     public void findByStartDateAndServiceShouldReturnNotFoundServiceByDate() throws Exception {
-        String service = this.restLogs.get(0).getService();
-        String start = this.restLogs.get(0).getDateInit();
 
-        List<RestLog> restLogs = List.of(this.restLogs.get(0), this.restLogs.get(1));
-
-        when(restService.findByService(service)).thenReturn(Optional.of(restLogs));
+        when(restService.findByService(service)).thenReturn(Optional.of(filteredRestLogs));
         when(restService.findByStartDateAndService(start, service)).thenReturn(Collections.emptyList());
 
         this.mockMvc.perform(get(
@@ -150,14 +137,10 @@ public class RestDateControllerTest {
 
     @Test
     public void findByEndDateAndServiceShouldReturnListOfRestLogsDTOS() throws Exception {
-        String service = this.restLogs.get(0).getService();
-        String end = this.restLogs.get(0).getDateInit();
+        List<RestLogDTO> expected = filteredRestLogs.stream().map(RestLogMapper::convertToDTO).toList();
 
-        List<RestLog> restLogs = List.of(this.restLogs.get(0), this.restLogs.get(1));
-        List<RestLogDTO> expected = restLogs.stream().map(RestLogMapper::convertToDTO).toList();
-
-        when(restService.findByService(service)).thenReturn(Optional.of(restLogs));
-        when(restService.findByEndDateAndService(end, service)).thenReturn(restLogs);
+        when(restService.findByService(service)).thenReturn(Optional.of(filteredRestLogs));
+        when(restService.findByEndDateAndService(end, service)).thenReturn(filteredRestLogs);
 
         this.mockMvc.perform(get(
                 String.format("/api/v1/rest/date/%s/end", end)).param("service", service))
@@ -167,9 +150,6 @@ public class RestDateControllerTest {
 
     @Test
     public void findByEndDateAndServiceShouldReturnNotFoundService() throws Exception {
-        String service = this.restLogs.get(0).getService();
-        String end = this.restLogs.get(0).getDateInit();
-
         when(restService.findByService(service)).thenReturn(Optional.empty());
 
         this.mockMvc.perform(get(
@@ -179,12 +159,8 @@ public class RestDateControllerTest {
 
     @Test
     public void findByEndDateAndServiceShouldReturnNotFoundServiceByDate() throws Exception {
-        String service = this.restLogs.get(0).getService();
-        String end = this.restLogs.get(0).getDateInit();
 
-        List<RestLog> restLogs = List.of(this.restLogs.get(0), this.restLogs.get(1));
-
-        when(restService.findByService(service)).thenReturn(Optional.of(restLogs));
+        when(restService.findByService(service)).thenReturn(Optional.of(filteredRestLogs));
         when(restService.findByEndDateAndService(end, service)).thenReturn(Collections.emptyList());
 
         this.mockMvc.perform(get(
