@@ -15,6 +15,26 @@ spring:
       auto-index-creation: true
       authentication-database: admin
       write-concern: majority
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+      key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: log-events-listener-group
+      auto-offset-reset: latest
+  main:
+    allow-circular-references: true
+kafka:
+  consumer:
+    topics:
+      topic.log.tbm,topic.log.tbm1
+
+auto:
+  create:
+    topics:
+      enable: true
+
 
 server:
   port: 8444
