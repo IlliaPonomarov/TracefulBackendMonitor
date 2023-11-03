@@ -1,5 +1,7 @@
 package com.tracer.logger.kafka;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -11,18 +13,8 @@ import java.util.List;
 public class LogConsumerService {
 
 
-    private List<String> topics;
-
-    @Value("#{'${kafka.consumer.topics}'.split(',')}")
-    public void setTopics(List<String> topics) {
-        this.topics = topics;
-    }
-    public List<String> getTopics() {
-        return topics;
-    }
-
-    @KafkaListener(topics = "topic.log.tbm")
-    public void consumeTest(String message) {
-        System.out.println("Consumed message: " + message);
+    @KafkaListener(topics = "#{'${kafka.consumer.topics}'.split(',')}")
+    public void consumeTest(ConsumerRecord<String, String> record) {
+        System.out.println();
     }
 }
