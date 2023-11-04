@@ -11,8 +11,9 @@ spring:
     mongodb:
       uri: ${SPRING_DATA_MONGODB_URI}
       auto-index-creation: true
-      authentication-database: ${SPRING_DATA_MONGODB_DATABASE}
+      authentication-database: spring-traceable-backend-monitor-server
       write-concern: majority
+      database: ${SPRING_DATA_MONGODB_DATABASE:tbm}
   kafka:
     bootstrap-servers: localhost:9092
     consumer:

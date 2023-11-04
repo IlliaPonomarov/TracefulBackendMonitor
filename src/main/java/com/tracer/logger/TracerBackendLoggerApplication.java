@@ -24,7 +24,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         )
 
 )
-@EnableEncryptableProperties
 public class TracerBackendLoggerApplication {
 
     public static void main(String[] args) {

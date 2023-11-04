@@ -10,5 +10,4 @@ import java.util.UUID;
 @Repository
 public interface KafkaRepository extends MongoRepository<KafkaLogRecord, UUID> {
 
-    Optional<KafkaLogRecord> findById(UUID id);
 }
