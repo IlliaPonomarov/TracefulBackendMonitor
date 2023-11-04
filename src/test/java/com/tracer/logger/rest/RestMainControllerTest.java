@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.tracer.logger.jsonParsers.JSONRestLogParser;
+import com.tracer.logger.json.parser.JSONLogParser;
 import com.tracer.logger.rest.dtos.RestLogDTO;
 import com.tracer.logger.rest.mappers.RestLogMapper;
 import com.tracer.logger.rest.models.RestLog;
@@ -41,7 +41,7 @@ public class RestMainControllerTest {
 
     @BeforeEach
     void setUp() {
-        this.restLogs = JSONRestLogParser.parse("src/test/java/com/tracer/logger/assets/restLogs.json");
+        this.restLogs = JSONLogParser.parseREST("src/test/java/com/tracer/logger/assets/restLogs.json");
         System.out.println(restLogs.toString());
 
         when(restService.findAll()).thenReturn(restLogs);
@@ -56,10 +56,10 @@ public class RestMainControllerTest {
 
         this.mockMvc.perform(post("/api/v1/rest/log")
                 .contentType("application/json")
-                .content(JSONRestLogParser.stringify(restLogDTO)))
+                .content(JSONLogParser.stringify(restLogDTO)))
                 .andDo(print())
                 .andExpect(status().isCreated())
-                .andExpect(content().json(JSONRestLogParser.stringify(restLogDTO)));
+                .andExpect(content().json(JSONLogParser.stringify(restLogDTO)));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class RestMainControllerTest {
 
         this.mockMvc.perform(post("/api/v1/rest/log")
                 .contentType("application/json")
-                .content(JSONRestLogParser.stringify(restLogDTO)))
+                .content(JSONLogParser.stringify(restLogDTO)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -105,7 +105,7 @@ public class RestMainControllerTest {
         this.mockMvc.perform(get("/api/v1/rest/" + uuid))
                 .andDo(print())
                 .andExpect(status().isFound())
-                .andExpect(content().json(JSONRestLogParser.stringify(restLogDTO)));
+                .andExpect(content().json(JSONLogParser.stringify(restLogDTO)));
     }
 
     @Test
@@ -139,7 +139,7 @@ public class RestMainControllerTest {
         when(restService.deleteByService(filteredByService)).thenReturn(filteredByService);
 
         List<RestLogDTO> restLogDTOList = filteredByService.stream().map(RestLogMapper::convertToDTO).toList();
-        String json = JSONRestLogParser.stringify(restLogDTOList);
+        String json = JSONLogParser.stringify(restLogDTOList);
 
         this.mockMvc.perform(delete("/api/v1/rest/service/" + service))
                 .andDo(print())

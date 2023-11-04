@@ -1,0 +1,114 @@
+{
+  "kafkaLogRecords": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "message": "Hello, World!",
+      "topic": "test-topic",
+      "key": "key-1",
+      "value": "value-1",
+      "partition": 0,
+      "offset": 12345,
+      "timestamp": "2023-11-04T14:30:00Z",
+      "timestampType": "CREATE_TIME",
+      "serializedKeySize": 10,
+      "serializedValueSize": 15,
+      "headers": "header-1",
+      "leaderEpoch": "1"
+    },
+    {
+      "id": "123e4567-e89b-12d3-a456-556655440000",
+      "message": "This is a sample message.",
+      "topic": "another-topic",
+      "key": "key-2",
+      "value": "value-2",
+      "partition": 1,
+      "offset": 54321,
+      "timestamp": "2023-11-04T15:00:00Z",
+      "timestampType": "LOG_APPEND_TIME",
+      "serializedKeySize": 8,
+      "serializedValueSize": 12,
+      "headers": "header-2",
+      "leaderEpoch": "2"
+    },
+    {
+      "id": "761e4777-e34b-90c1-b456-223355440000",
+      "message": "Kafka message example.",
+      "topic": "kafka-topic",
+      "key": "key-3",
+      "value": "value-3",
+      "partition": 2,
+      "offset": 67890,
+      "timestamp": "2023-11-04T15:30:00Z",
+      "timestampType": "CREATE_TIME",
+      "serializedKeySize": 12,
+      "serializedValueSize": 18,
+      "headers": "header-3",
+      "leaderEpoch": "3"
+    },
+    {
+      "id": "999e8888-e34b-67d2-c456-112233445566",
+      "message": "Important notification!",
+      "topic": "notification-topic",
+      "key": "key-4",
+      "value": "value-4",
+      "partition": 0,
+      "offset": 13579,
+      "timestamp": "2023-11-04T16:00:00Z",
+      "timestampType": "LOG_APPEND_TIME",
+      "serializedKeySize": 14,
+      "serializedValueSize": 20,
+      "headers": "header-4",
+      "leaderEpoch": "4"
+    },
+    {
+      "id": "111e2222-e34b-33a4-d456-444455556666",
+      "message": "Test message.",
+      "topic": "test-topic",
+      "key": "key-5",
+      "value": "value-5",
+      "partition": 1,
+      "offset": 24680,
+      "timestamp": "2023-11-04T16:30:00Z",
+      "timestampType": "CREATE_TIME",
+      "serializedKeySize": 11,
+      "serializedValueSize": 16,
+      "headers": "header-5",
+      "leaderEpoch": "5"
+    },
+    {
+      "id": "888e7777-e34b-9901-f456-777788889999",
+      "message": "Greetings from Kafka!",
+      "topic": "greetings-topic",
+      "key": "key-6",
+      "value": "value-6",
+      "partition": 2,
+      "offset": 35791,
+      "timestamp": "2023-11-04T17:00:00Z",
+      "timestampType": "LOG_APPEND_TIME",
+      "serializedKeySize": 9,
+      "serializedValueSize": 14,
+      "headers": "header-6",
+      "leaderEpoch": "6"
+    },
+    {
+      "id": "222e3333-e34b-44b4-e456-888899990000",
+      "message": "Sample log entry.",
+      "topic": "log-topic",
+      "key": "key-7",
+      "value": "value-7",
+      "partition": 0,
+      "offset": 15973,
+      "timestamp": "2023-11-04T17:30:00Z",
+      "timestampType": "CREATE_TIME",
+      "serializedKeySize": 13,
+      "serializedValueSize": 17,
+      "headers": "header-7",
+      "leaderEpoch": "7"
+    }
+
+
+
+
+
+  ]
+}

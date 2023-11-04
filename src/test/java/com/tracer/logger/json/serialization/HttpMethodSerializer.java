@@ -1,4 +1,4 @@
-package com.tracer.logger.jsonser;
+package com.tracer.logger.json.serialization;
 
 import com.fasterxml.jackson.databind.JsonSerializer;
 import org.springframework.http.HttpMethod;

@@ -1,6 +1,6 @@
 package com.tracer.logger.rest;
 
-import com.tracer.logger.jsonParsers.JSONRestLogParser;
+import com.tracer.logger.json.parser.JSONLogParser;
 import com.tracer.logger.rest.dtos.RestLogDTO;
 import com.tracer.logger.rest.mappers.RestLogMapper;
 import com.tracer.logger.rest.models.RestLog;
@@ -16,9 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -41,7 +39,7 @@ public class RestDateControllerTest {
 
     @BeforeEach
     void setUp() {
-        this.restLogs = JSONRestLogParser.parse("src/test/java/com/tracer/logger/assets/restLogs.json");
+        this.restLogs = JSONLogParser.parseREST("src/test/java/com/tracer/logger/assets/restLogs.json");
         this.service = this.restLogs.get(0).getService();
         this.start = this.restLogs.get(0).getDateInit();
         this.end = this.restLogs.get(1).getDateInit();
@@ -64,7 +62,7 @@ public class RestDateControllerTest {
         this.mockMvc.perform(get(
                 String.format("/api/v1/rest/date/%s/%s", start, end)).param("service", service))
                 .andExpect(status().isFound())
-                .andExpect(content().json(JSONRestLogParser.stringify(expected)));
+                .andExpect(content().json(JSONLogParser.stringify(expected)));
 
     }
 
@@ -104,7 +102,7 @@ public class RestDateControllerTest {
         this.mockMvc.perform(get(
                 String.format("/api/v1/rest/date/%s/start", start)).param("service", service))
                 .andExpect(status().isFound())
-                .andExpect(content().json(JSONRestLogParser.stringify(expected)));
+                .andExpect(content().json(JSONLogParser.stringify(expected)));
     }
 
 
@@ -145,7 +143,7 @@ public class RestDateControllerTest {
         this.mockMvc.perform(get(
                 String.format("/api/v1/rest/date/%s/end", end)).param("service", service))
                 .andExpect(status().isFound())
-                .andExpect(content().json(JSONRestLogParser.stringify(expected)));
+                .andExpect(content().json(JSONLogParser.stringify(expected)));
     }
 
     @Test

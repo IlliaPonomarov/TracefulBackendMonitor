@@ -22,4 +22,23 @@ public class KafkaMapper {
                 record.getLeaderEpoch()
         );
     }
+
+    public static KafkaLogRecord convertToEntity(KafkaLogRecordDTO kafkaLogRecordDTO) {
+
+        return new KafkaLogRecord(
+                kafkaLogRecordDTO.getId(),
+                kafkaLogRecordDTO.getMessage(),
+                kafkaLogRecordDTO.getTopic(),
+                kafkaLogRecordDTO.getKey(),
+                kafkaLogRecordDTO.getValue(),
+                kafkaLogRecordDTO.getPartition(),
+                kafkaLogRecordDTO.getOffset(),
+                kafkaLogRecordDTO.getTimestamp(),
+                kafkaLogRecordDTO.getTimestampType(),
+                kafkaLogRecordDTO.getSerializedKeySize(),
+                kafkaLogRecordDTO.getSerializedValueSize(),
+                kafkaLogRecordDTO.getHeaders(),
+                kafkaLogRecordDTO.getLeaderEpoch()
+        );
+    }
 }

@@ -27,7 +27,6 @@ public class KafkaLogRecord {
 
 
     public KafkaLogRecord(ConsumerRecord<String, String> record) {
-        this.id = UUID.randomUUID();
         this.message = "LogConsumerRecord";
         this.topic = record.topic();
         this.key = record.key();
@@ -40,6 +39,37 @@ public class KafkaLogRecord {
         this.serializedValueSize = record.serializedValueSize();
         this.headers = record.headers().toString();
         this.leaderEpoch = record.leaderEpoch().toString();
+    }
+
+    public KafkaLogRecord(UUID id, String message, String topic, String key, String value, int partition, long offset, String timestamp, String timestampType, int serializedKeySize, int serializedValueSize, String headers, String leaderEpoch) {
+        this.id = id;
+        this.message = message;
+        this.topic = topic;
+        this.key = key;
+        this.value = value;
+        this.partition = partition;
+        this.offset = offset;
+        this.timestamp = timestamp;
+        this.timestampType = timestampType;
+        this.serializedKeySize = serializedKeySize;
+        this.serializedValueSize = serializedValueSize;
+        this.headers = headers;
+        this.leaderEpoch = leaderEpoch;
+    }
+
+    public KafkaLogRecord(String message, String topic, String key, String value, int partition, long offset, String timestamp, String timestampType, int serializedKeySize, int serializedValueSize, String headers, String leaderEpoch) {
+        this.message = message;
+        this.topic = topic;
+        this.key = key;
+        this.value = value;
+        this.partition = partition;
+        this.offset = offset;
+        this.timestamp = timestamp;
+        this.timestampType = timestampType;
+        this.serializedKeySize = serializedKeySize;
+        this.serializedValueSize = serializedValueSize;
+        this.headers = headers;
+        this.leaderEpoch = leaderEpoch;
     }
 
     public UUID getId() {

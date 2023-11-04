@@ -6,7 +6,6 @@ springdoc:
         path: /swagger-ui.html
         enabled: true
 
-
 spring:
   data:
     mongodb:
