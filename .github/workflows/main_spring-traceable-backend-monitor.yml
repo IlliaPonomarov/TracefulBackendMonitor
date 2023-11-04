@@ -42,6 +42,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: java-app
+        env:
+          SPRING_DATA_MONGODB_URI: ${{ secrets.SPRING_DATA_MONGODB_URI }}
+          SPRING_DATA_MONGODB_DATABASE: ${{ secrets.DATABASE }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
