@@ -1,5 +1,6 @@
 package com.tracer.logger;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
@@ -23,6 +24,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         )
 
 )
+@EnableEncryptableProperties
 public class TracerBackendLoggerApplication {
 
     public static void main(String[] args) {

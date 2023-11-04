@@ -9,10 +9,9 @@ springdoc:
 spring:
   data:
     mongodb:
-      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:27017/tbm}
-      database: tbm
+      uri: ${SPRING_DATA_MONGODB_URI}
       auto-index-creation: true
-      authentication-database: admin
+      authentication-database: ${SPRING_DATA_MONGODB_DATABASE}
       write-concern: majority
   kafka:
     bootstrap-servers: localhost:9092
