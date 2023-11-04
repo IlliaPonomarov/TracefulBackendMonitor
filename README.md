@@ -2,7 +2,7 @@
 
 ![TBM Logo](/img/tbm-logo.png)
 
-Traceable Backend Monitor (TBM) is a powerful backend monitoring tool designed to log request/response communication to MongoDB and Kafka. This documentation provides an overview of the project, its features, setup instructions, and usage guidelines.
+Traceable Backend Monitor (TBM) is a powerful backend monitoring tool designed to log REST/SOAP/Kafka communications. This documentation provides an overview of the project, its features, setup instructions, and usage guidelines.
 
 ## Table of Contents
 
