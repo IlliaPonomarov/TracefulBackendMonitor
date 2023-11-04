@@ -1,8 +1,8 @@
-# Tracful Backend Monitor (TBM) - Project Documentation
+# Traceable Backend Monitor (TBM) - Project Documentation
 
 ![TBM Logo](/img/tbm-logo.png)
 
-Tracful Backend Monitor (TBM) is a powerful backend monitoring tool designed to log request/response communication to MongoDB and Kafka. This documentation provides an overview of the project, its features, setup instructions, and usage guidelines.
+Traceable Backend Monitor (TBM) is a powerful backend monitoring tool designed to log request/response communication to MongoDB and Kafka. This documentation provides an overview of the project, its features, setup instructions, and usage guidelines.
 
 ## Table of Contents
 
@@ -16,13 +16,13 @@ Tracful Backend Monitor (TBM) is a powerful backend monitoring tool designed to 
 - [Dockerfile](#dockerfile)
 - [Docker](#docker)
 - [Kubernetes](#kubernetes)
-- [Traceful Backend Monitor (TBM) - yaml](#traceful-backend-monitor-tbm---yaml)
+- [Traceable Backend Monitor (TBM) - yaml](#traceable-backend-monitor-tbm---yaml)
 - [MongoDB yaml](#mongodb-yaml)
 - [License](#license)
 
 ## Introduction
 
-Tracful Backend Monitor (TBM) is a Spring Boot-based backend monitoring solution that logs communication events between various components in your application. It facilitates tracking interactions between client-backend, backend-backend, and backend-client communication. TBM uses MongoDB to store communication logs and Kafka for real-time log streaming.
+Traceable Backend Monitor (TBM) is a Spring Boot-based backend monitoring solution that logs communication events between various components in your application. It facilitates tracking interactions between client-backend, backend-backend, and backend-client communication. TBM uses MongoDB to store communication logs and Kafka for real-time log streaming.
 
 ## Features
 
@@ -135,7 +135,7 @@ ENTRYPOINT ["java","-jar","/app/app.jar"]
 
 ## Kubernetes
 
-### Traceful Backend Monitor (TBM) - yaml:
+### Traceable Backend Monitor (TBM) - yaml:
 ```
 apiVersion: apps/v1
 kind: Deployment
