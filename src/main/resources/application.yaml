@@ -9,7 +9,7 @@ springdoc:
 spring:
   data:
     mongodb:
-      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:27017/spring-traceable-backend-monitor-server}
+      uri: ${SPRING_DATA_MONGODB_URI:mongodb://spring-traceable-backend-monitor-database:iSyWrOkC05CwXD4VBZPivfaCbc70osxPRTzfyoD62YK5WNl1SFd3kHG7N8Sxt7PV7ph3exjk1wElACDbaO2gtQ==@spring-traceable-backend-monitor-database.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@spring-traceable-backend-monitor-database@globaldb}
       auto-index-creation: true
       authentication-database: spring-traceable-backend-monitor-server
       write-concern: majority
