@@ -1,14 +1,11 @@
-package com.tracer.logger.kafka.consumers;
+package com.tracer.logger.kafka.dtos;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.common.protocol.types.Field;
-
 import java.util.Objects;
 import java.util.UUID;
 
-
-public class LogConsumerRecord {
-    private UUID id;
+public class KafkaLogRecordDTO {
+    private final UUID id;
     private String message;
     private String topic;
     private String key;
@@ -22,20 +19,21 @@ public class LogConsumerRecord {
     private String headers;
     private String leaderEpoch;
 
-    public LogConsumerRecord(ConsumerRecord<String, String> record) {
-        this.id = UUID.randomUUID();
-        this.message = "LogConsumerRecord";
-        this.topic = record.topic();
-        this.key = record.key();
-        this.value = record.value();
-        this.partition = record.partition();
-        this.offset = record.offset();
-        this.timestamp = String.valueOf(record.timestamp());
-        this.timestampType = record.timestampType().toString();
-        this.serializedKeySize = record.serializedKeySize();
-        this.serializedValueSize = record.serializedValueSize();
-        this.headers = record.headers().toString();
-        this.leaderEpoch = record.leaderEpoch().toString();
+
+    public KafkaLogRecordDTO(UUID id, String message, String topic, String key, String value, int partition, long offset, String timestamp, String timestampType, int serializedKeySize, int serializedValueSize, String headers, String leaderEpoch) {
+        this.id = id;
+        this.message = message;
+        this.topic = topic;
+        this.key = key;
+        this.value = value;
+        this.partition = partition;
+        this.offset = offset;
+        this.timestamp = timestamp;
+        this.timestampType = timestampType;
+        this.serializedKeySize = serializedKeySize;
+        this.serializedValueSize = serializedValueSize;
+        this.headers = headers;
+        this.leaderEpoch = leaderEpoch;
     }
 
     public UUID getId() {
@@ -141,8 +139,8 @@ public class LogConsumerRecord {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LogConsumerRecord that = (LogConsumerRecord) o;
+        if (!(o instanceof KafkaLogRecordDTO that)) return false;
+
         return partition == that.partition && offset == that.offset && serializedKeySize == that.serializedKeySize && serializedValueSize == that.serializedValueSize && Objects.equals(id, that.id) && Objects.equals(message, that.message) && Objects.equals(topic, that.topic) && Objects.equals(key, that.key) && Objects.equals(value, that.value) && Objects.equals(timestamp, that.timestamp) && Objects.equals(timestampType, that.timestampType) && Objects.equals(headers, that.headers) && Objects.equals(leaderEpoch, that.leaderEpoch);
     }
 
