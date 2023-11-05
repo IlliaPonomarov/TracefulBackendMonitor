@@ -32,6 +32,9 @@ jobs:
         env:
           SPRING_DATA_MONGODB_URI: ${{ secrets.SPRING_DATA_MONGODB_URI }}
           SPRING_DATA_MONGODB_DATABASE: ${{ secrets.SPRING_DATA_MONGODB_URI }}
+      
+      - name: Global Vars
+        run: echo "${SPRING_DATA_MONGODB_URI}"
 
   deploy:
     runs-on: ubuntu-latest
@@ -45,9 +48,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: java-app
-
-      - name: Global Vars
-        run: echo "${SPRING_DATA_MONGODB_URI}"
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
