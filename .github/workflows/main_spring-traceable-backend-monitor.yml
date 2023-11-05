@@ -29,7 +29,7 @@ jobs:
           java-version: '17'
 
       - name: Build with Maven
-        run: mvn clean install -Dspring.data.mongodb.uri=${{ secrets.SPRING_DATA_MONGODB_URI }} -Dspring.data.mongodb.database=${{ secrets.SPRING_DATA_MONGODB_DATABASE }}
+        run: mvn clean install "-Dspring.data.mongodb.uri=${{ secrets.SPRING_DATA_MONGODB_URI }}" "-Dspring.data.mongodb.database=${{ secrets.SPRING_DATA_MONGODB_DATABASE }}"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
