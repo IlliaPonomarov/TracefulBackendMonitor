@@ -35,6 +35,8 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: java-app
+          SPRING_DATA_MONGODB_URI: ${{ secrets.SPRING_DATA_MONGODB_URI }}
+          SPRING_DATA_MONGODB_DATABASE: ${{ secrets.SPRING_DATA_MONGODB_URI }}
           path: '${{ github.workspace }}/target/*.jar'
 
 
