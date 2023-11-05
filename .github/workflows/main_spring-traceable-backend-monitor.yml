@@ -16,6 +16,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+        env:
+          SPRING_DATA_MONGODB_URI: ${{ secrets.SPRING_DATA_MONGODB_URI }}
+          SPRING_DATA_MONGODB_DATABASE: ${{ secrets.SPRING_DATA_MONGODB_URI }}
+        
+      - name: Global Vars
+        run: echo "$SPRING_DATA_MONGODB_URI"
+          
       - name: Set up Java version
         uses: actions/setup-java@v1
         with:
@@ -29,12 +36,7 @@ jobs:
         with:
           name: java-app
           path: '${{ github.workspace }}/target/*.jar'
-        env:
-          SPRING_DATA_MONGODB_URI: ${{ secrets.SPRING_DATA_MONGODB_URI }}
-          SPRING_DATA_MONGODB_DATABASE: ${{ secrets.SPRING_DATA_MONGODB_URI }}
-      
-      - name: Global Vars
-        run: echo "${SPRING_DATA_MONGODB_URI}"
+
 
   deploy:
     runs-on: ubuntu-latest
