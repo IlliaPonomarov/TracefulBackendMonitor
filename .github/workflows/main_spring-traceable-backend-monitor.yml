@@ -21,7 +21,7 @@ jobs:
           SPRING_DATA_MONGODB_DATABASE: ${{ secrets.SPRING_DATA_MONGODB_URI }}
         
       - name: Global Vars
-        run: echo "$SPRING_DATA_MONGODB_URI"
+        run: echo "${{ secrets.SPRING_DATA_MONGODB_URI }}"
           
       - name: Set up Java version
         uses: actions/setup-java@v1
@@ -57,5 +57,7 @@ jobs:
         with:
           app-name: 'Spring-Traceable-Backend-Monitor'
           slot-name: 'Production'
+          SPRING_DATA_MONGODB_URI: ${{ secrets.SPRING_DATA_MONGODB_URI }}
+          SPRING_DATA_MONGODB_DATABASE: ${{ secrets.SPRING_DATA_MONGODB_URI }}
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BBF399E9332A4593AF6257911BF71970 }}
           package: '*.jar'
